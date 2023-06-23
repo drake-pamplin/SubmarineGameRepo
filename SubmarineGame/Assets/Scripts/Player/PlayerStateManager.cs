@@ -15,13 +15,17 @@ public class PlayerStateManager : MonoBehaviour
     public bool IsMovementStateWater() { return movementState == MovementState.water; }
     
     public enum PlayerState {
+        breastStroke,
         idle,
         sprint,
+        tread,
         walk
     }
     private PlayerState playerState = PlayerState.idle;
+    public bool IsPlayerBreastStrokeState() { return playerState == PlayerState.breastStroke; }
     public bool IsPlayerIdleState() { return playerState == PlayerState.idle; }
     public bool IsPlayerSprintState() { return playerState == PlayerState.sprint; }
+    public bool IsPlayerTreadState() { return playerState == PlayerState.tread; }
     public bool IsPlayerWalkState() { return playerState == PlayerState.walk; }
     
     // Start is called before the first frame update
@@ -58,15 +62,29 @@ public class PlayerStateManager : MonoBehaviour
         - Walk
         - Idle
         */
+        if (IsMovementStateGrounded()) {
+            if (playerMovementManager.IsPlayerSprinting()) {
+                playerState = PlayerState.sprint;
+                return;
+            }
+            if (playerMovementManager.IsPlayerWalking()) {
+                playerState = PlayerState.walk;
+                return;
+            }
+            playerState = PlayerState.idle;
+        }
 
-        if (playerMovementManager.IsPlayerSprinting()) {
-            playerState = PlayerState.sprint;
-            return;
+        /*
+        Priority:
+        - BreastStroke
+        - Tread
+        */
+        if (IsMovementStateWater()) {
+            if (playerMovementManager.IsPlayerBreastStroking()) {
+                playerState = PlayerState.breastStroke;
+                return;
+            }
+            playerState = PlayerState.tread;
         }
-        if (playerMovementManager.IsPlayerWalking()) {
-            playerState = PlayerState.walk;
-            return;
-        }
-        playerState = PlayerState.idle;
     }
 }

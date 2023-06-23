@@ -120,6 +120,10 @@ public class PlayerMovementManager : MonoBehaviour
         referenceCharacterController.Move(verticalVector * Time.deltaTime);
     }
 
+    public bool IsPlayerBreastStroking() {
+        return movementForwardInput != 0 || movementHorizontalInput != 0 || verticalSwimInput != 0;
+    }
+
     public bool IsPlayerSprinting() {
         return ((movementForwardInput > 0) && InputManager.instance.GetSprintInput()) ||
             ((movementForwardInput == 0 && movementHorizontalInput != 0) && InputManager.instance.GetSprintInput());

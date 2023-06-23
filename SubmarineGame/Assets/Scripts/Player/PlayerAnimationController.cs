@@ -19,6 +19,11 @@ public class PlayerAnimationController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (playerStateManager.IsPlayerBreastStrokeState()) {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName(ConstantsManager.animationBreastStrokeName)) {
+                animator.Play(ConstantsManager.animationBreastStrokeName);
+            }
+        }
         if (playerStateManager.IsPlayerIdleState()) {
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName(ConstantsManager.animationIdleName)) {
                 animator.Play(ConstantsManager.animationIdleName);
@@ -27,6 +32,11 @@ public class PlayerAnimationController : MonoBehaviour
         if (playerStateManager.IsPlayerSprintState()) {
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName(ConstantsManager.animationRunName)) {
                 animator.Play(ConstantsManager.animationRunName);
+            }
+        }
+        if (playerStateManager.IsPlayerTreadState()) {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName(ConstantsManager.animationTreadName)) {
+                animator.Play(ConstantsManager.animationTreadName);
             }
         }
         if (playerStateManager.IsPlayerWalkState()) {
