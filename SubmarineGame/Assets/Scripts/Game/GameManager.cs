@@ -15,12 +15,20 @@ public class GameManager : MonoBehaviour
     public float GetPlayerLookSensitivityHorizontal() { return playerLookSensitivityHorizontal; }
     public float playerLookSensitivityVertical;
     public float GetPlayerLookSensitivityVertical() { return playerLookSensitivityVertical; }
+    public float playerSprintSpeed;
+    public float GetPlayerSprintSpeed() { return playerSprintSpeed; }
+    public float playerSwimSpeed;
+    public float GetPlayerSwimSpeed() { return playerSwimSpeed; }
     public float playerWalkSpeed;
     public float GetPlayerWalkSpeed() { return playerWalkSpeed; }
 
     [Header ("World Variables")]
     public float worldGravityValue;
     public float GetWorldGravityValue() { return worldGravityValue; }
+    public float worldWaterIntertiaValue;
+    public float GetWorldWaterIntertiaValue() { return worldWaterIntertiaValue; }
+    public float worldWaterLine;
+    public float GetWorldWaterLine() { return worldWaterLine; }
 
     void Awake() {
         instance = this;

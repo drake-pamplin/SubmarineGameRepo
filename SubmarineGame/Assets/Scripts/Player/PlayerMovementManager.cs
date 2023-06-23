@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerMovementManager : MonoBehaviour
 {
+    private PlayerStateManager playerStateManager;
+    
     private bool jumpInput = false;
     private bool jumpQueued = false;
-    private Vector3 jumpVector = Vector3.zero;
     
     private float lookHorizontalInput = 0;
     private float lookVerticalInput = 0;
@@ -16,10 +17,15 @@ public class PlayerMovementManager : MonoBehaviour
     private Vector3 movementVector = Vector3.zero;
 
     private CharacterController referenceCharacterController;
+
+    private Vector3 verticalVector = Vector3.zero;
+    private int verticalSwimInput = 0;
     
     // Start is called before the first frame update
     void Start()
     {
+        playerStateManager = GetComponent<PlayerStateManager>();
+        
         referenceCharacterController = GetComponent<CharacterController>();
     }
 
@@ -46,10 +52,33 @@ public class PlayerMovementManager : MonoBehaviour
         return cameraObject;
     }
 
+    private void HandleGroundedMoveInput() {
+        bool isGrounded = referenceCharacterController.isGrounded;
+
+        if (IsPlayerSprinting()) {
+            movementVector *= GameManager.instance.GetPlayerSprintSpeed();
+        } else {
+            movementVector *= GameManager.instance.GetPlayerWalkSpeed();
+        }
+        movementVector = transform.TransformDirection(movementVector);
+        referenceCharacterController.Move(movementVector * Time.deltaTime);
+
+        if (isGrounded) {
+            verticalVector.y = 0;
+        }
+        if (jumpQueued && isGrounded) {
+            verticalVector.y += GameManager.instance.GetPlayerJumpForce();
+            jumpQueued = false;
+        } else {
+            jumpQueued = false;
+        }
+        verticalVector.y -= GameManager.instance.GetWorldGravityValue();
+        referenceCharacterController.Move(verticalVector * Time.deltaTime);
+    }
+
     private void HandlePlayerLookInput() {
         Vector3 cameraObjectRotation = GetCameraObject().transform.rotation.eulerAngles;
         cameraObjectRotation.x += (lookVerticalInput * GameManager.instance.GetPlayerLookSensitivityVertical());
-        Debug.Log(cameraObjectRotation.x);
         if (cameraObjectRotation.x < GameManager.instance.GetPlayerLookClamp() || cameraObjectRotation.x > (360 - GameManager.instance.GetPlayerLookClamp())) {
             GetCameraObject().transform.rotation = Quaternion.Euler(cameraObjectRotation);
         }
@@ -60,30 +89,48 @@ public class PlayerMovementManager : MonoBehaviour
     }
 
     private void HandlePlayerMoveInput() {
-        bool isGrounded = referenceCharacterController.isGrounded;
-
-        movementVector = transform.TransformDirection(movementVector);
-        referenceCharacterController.Move(movementVector * Time.deltaTime * GameManager.instance.GetPlayerWalkSpeed());
-
-        if (isGrounded) {
-            jumpVector.y = 0;
+        if (playerStateManager.IsMovementStateGrounded()) {
+            HandleGroundedMoveInput();
         }
-        if (jumpQueued && isGrounded) {
-            jumpVector.y += GameManager.instance.GetPlayerJumpForce();
-            jumpQueued = false;
-        } else {
-            jumpQueued = false;
+        if (playerStateManager.IsMovementStateWater()) {
+            HandleWaterMoveInput();
         }
-        jumpVector.y -= GameManager.instance.GetWorldGravityValue();
-        referenceCharacterController.Move(jumpVector * Time.deltaTime);
     }
 
-    public bool IsPlayerMoving() {
-        return movementForwardInput != 0 || movementHorizontalInput != 0;
+    private void HandleWaterMoveInput() {
+        movementVector = GetCameraObject().transform.TransformDirection(movementVector);
+        Vector3 verticalSwimVector = new Vector3(0, verticalSwimInput, 0);
+        movementVector += verticalSwimVector;
+        movementVector = movementVector.normalized;
+        movementVector *= GameManager.instance.GetPlayerSwimSpeed();
+        referenceCharacterController.Move(movementVector * Time.deltaTime);
+
+        if (verticalVector.y <= GameManager.instance.GetWorldWaterIntertiaValue() && verticalVector.y >= (-1 * GameManager.instance.GetWorldWaterIntertiaValue())) {
+            verticalVector.y = 0;
+        } else {
+            if (verticalVector.y > 0.2f) {
+                verticalVector.y -= GameManager.instance.GetWorldWaterIntertiaValue();
+            } else {
+                verticalVector.y += GameManager.instance.GetWorldWaterIntertiaValue();
+            }
+        }
+        if (verticalVector.y >= 0 && verticalSwimVector.y > 0 && GameManager.instance.GetWorldWaterLine() - transform.position.y < 0.2f) {
+            verticalVector.y = GameManager.instance.GetPlayerJumpForce();
+        }
+        referenceCharacterController.Move(verticalVector * Time.deltaTime);
+    }
+
+    public bool IsPlayerSprinting() {
+        return ((movementForwardInput > 0) && InputManager.instance.GetSprintInput()) ||
+            ((movementForwardInput == 0 && movementHorizontalInput != 0) && InputManager.instance.GetSprintInput());
+    }
+
+    public bool IsPlayerWalking() {
+        return (movementForwardInput != 0 || movementHorizontalInput != 0) && !IsPlayerSprinting();
     }
 
     private void ProcessPlayerJumpInput() {
-        jumpInput = InputManager.instance.GetPlayerJumpInput();
+        jumpInput = InputManager.instance.GetJumpInput();
     }
     
     private void ProcessPlayerLookInput() {
@@ -99,5 +146,7 @@ public class PlayerMovementManager : MonoBehaviour
 
         movementVector = new Vector3(movementHorizontalInput, 0, movementForwardInput);
         movementVector = movementVector.normalized;
+
+        verticalSwimInput = InputManager.instance.GetSwimVerticalInput();
     }
 }

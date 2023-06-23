@@ -24,6 +24,11 @@ public class PlayerAnimationController : MonoBehaviour
                 animator.Play(ConstantsManager.animationIdleName);
             }
         }
+        if (playerStateManager.IsPlayerSprintState()) {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName(ConstantsManager.animationRunName)) {
+                animator.Play(ConstantsManager.animationRunName);
+            }
+        }
         if (playerStateManager.IsPlayerWalkState()) {
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName(ConstantsManager.animationWalkName)) {
                 animator.Play(ConstantsManager.animationWalkName);

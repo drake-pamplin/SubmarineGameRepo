@@ -15,6 +15,7 @@ public class InputManager : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = true;
     }
 
     // Update is called once per frame
@@ -69,7 +70,7 @@ public class InputManager : MonoBehaviour
         return inputValue;
     }
 
-    public bool GetPlayerJumpInput() {
+    public bool GetJumpInput() {
         bool inputValue = false;
 
         if (Keyboard.current.spaceKey.wasPressedThisFrame) {
@@ -84,6 +85,29 @@ public class InputManager : MonoBehaviour
 
         inputValue = Mouse.current.delta.ReadValue();
         inputValue.y *= -1;
+
+        return inputValue;
+    }
+
+    public bool GetSprintInput() {
+        bool inputValue = false;
+
+        if (Keyboard.current.shiftKey.isPressed) {
+            inputValue = true;
+        }
+
+        return inputValue;
+    }
+
+    public int GetSwimVerticalInput() {
+        int inputValue = 0;
+
+        if (Keyboard.current.spaceKey.isPressed) {
+            inputValue++;
+        }
+        if (Keyboard.current.altKey.isPressed) {
+            inputValue--;
+        }
 
         return inputValue;
     }
