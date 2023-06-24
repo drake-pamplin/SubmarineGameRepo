@@ -55,13 +55,15 @@ public class PlayerMovementManager : MonoBehaviour
     private void HandleGroundedMoveInput() {
         bool isGrounded = referenceCharacterController.isGrounded;
 
-        if (IsPlayerSprinting()) {
-            movementVector *= GameManager.instance.GetPlayerSprintSpeed();
-        } else {
-            movementVector *= GameManager.instance.GetPlayerWalkSpeed();
-        }
+        // if (IsPlayerSprinting()) {
+        //     movementVector *= GameManager.instance.GetPlayerSprintSpeed();
+        // } else {
+        //     movementVector *= GameManager.instance.GetPlayerWalkSpeed();
+        // }
         movementVector = transform.TransformDirection(movementVector);
-        referenceCharacterController.Move(movementVector * Time.deltaTime);
+        Debug.Log(movementVector);
+        movementVector = movementVector.normalized;
+        referenceCharacterController.Move(movementVector * (IsPlayerSprinting() ? GameManager.instance.GetPlayerSprintSpeed() : GameManager.instance.GetPlayerWalkSpeed()) * Time.deltaTime);
 
         if (isGrounded) {
             verticalVector.y = 0;
@@ -91,9 +93,11 @@ public class PlayerMovementManager : MonoBehaviour
     private void HandlePlayerMoveInput() {
         if (playerStateManager.IsMovementStateGrounded()) {
             HandleGroundedMoveInput();
+            return;
         }
         if (playerStateManager.IsMovementStateWater()) {
             HandleWaterMoveInput();
+            return;
         }
     }
 
@@ -149,7 +153,6 @@ public class PlayerMovementManager : MonoBehaviour
         movementHorizontalInput += InputManager.instance.GetHorizontalInput();
 
         movementVector = new Vector3(movementHorizontalInput, 0, movementForwardInput);
-        movementVector = movementVector.normalized;
 
         verticalSwimInput = InputManager.instance.GetSwimVerticalInput();
     }
