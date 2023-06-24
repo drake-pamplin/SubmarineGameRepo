@@ -9,3 +9,5 @@ v0.1.0-alt-movement ============================================================
 - Added breast stroke and freestyle stroke animations.
 - Added sprint animation.
 - Added swim and sprint logic.
+
+v0.2.0-skimming ===================================================================================
