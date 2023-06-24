@@ -24,6 +24,16 @@ public class InputManager : MonoBehaviour
         
     }
 
+    public bool GetDropInput() {
+        bool inputValue = false;
+
+        if (Keyboard.current.qKey.wasPressedThisFrame) {
+            return true;
+        }
+
+        return inputValue;
+    }
+
     public int GetForwardInput() {
         int inputValue = 0;
 

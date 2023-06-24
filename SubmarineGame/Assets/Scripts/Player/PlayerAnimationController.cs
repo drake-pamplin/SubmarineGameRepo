@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class PlayerAnimationController : MonoBehaviour
 {
+    private PlayerEquipmentManager playerEquipmentManager;
     private PlayerStateManager playerStateManager;
 
     private Animator animator;
+    private GameObject displayObject = null;
+    private string[] equipStateNames = new string[] {
+        ConstantsManager.animationEquipName
+    };
     
     // Start is called before the first frame update
     void Start()
     {
+        playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
         playerStateManager = GetComponent<PlayerStateManager>();
 
         animator = transform.Find(ConstantsManager.gameObjectCameraName).Find(ConstantsManager.gameObjectAnimationName).gameObject.GetComponent<Animator>();
@@ -19,6 +25,57 @@ public class PlayerAnimationController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ProcessAnimationState();
+    }
+
+    private string GetItemAnimationName(string baseName) {
+        string animationName = "";
+
+        if (!playerEquipmentManager.IsItemEquipped()) {
+            animationName = baseName;
+        } else {
+            Item equippedItem = playerEquipmentManager.GetEquippedItem();
+            string itemId = equippedItem.GetItemId();
+            animationName = baseName + ConstantsManager.splitCharUnderscore + itemId;
+        }
+
+        return animationName;
+    }
+
+    public void HandleItemEquipped() {
+        Destroy(displayObject);
+        
+        if (playerEquipmentManager.IsItemEquipped()) {
+            Item equippedItem = playerEquipmentManager.GetEquippedItem();
+            string itemId = equippedItem.GetItemId();
+
+            
+            displayObject = Instantiate(
+                PrefabManager.instance.GetPrefabNetObject(),
+                GameObject.FindGameObjectWithTag(ConstantsManager.tagItemReference).transform
+            );
+        }
+
+        string animationName = GetItemAnimationName(ConstantsManager.animationEquipBase);
+        animator.Play(animationName);
+    }
+
+    private void ProcessAnimationState() {
+        string animationName = "";
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(ConstantsManager.animationDefaultName)) {
+            animationName = GetItemAnimationName(ConstantsManager.animationEquipBase);
+            animator.Play(animationName);
+        }
+        // Additional checks for default since it takes a minute to register when going into the scene.
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(ConstantsManager.animationDefaultName)) {
+            return;
+        }
+
+        string equipStateName = GetItemAnimationName(ConstantsManager.animationEquipBase);
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(equipStateName)) {
+            return;
+        }
+        
         if (playerStateManager.IsPlayerBreastStrokeState()) {
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName(ConstantsManager.animationBreastStrokeName)) {
                 animator.Play(ConstantsManager.animationBreastStrokeName);
@@ -30,13 +87,15 @@ public class PlayerAnimationController : MonoBehaviour
             }
         }
         if (playerStateManager.IsPlayerIdleState()) {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName(ConstantsManager.animationIdleName)) {
-                animator.Play(ConstantsManager.animationIdleName);
+            animationName = GetItemAnimationName(ConstantsManager.animationIdleBase);
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName)) {
+                animator.Play(animationName);
             }
         }
         if (playerStateManager.IsPlayerSprintState()) {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName(ConstantsManager.animationRunName)) {
-                animator.Play(ConstantsManager.animationRunName);
+            animationName = GetItemAnimationName(ConstantsManager.animationRunBase);
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName)) {
+                animator.Play(animationName);
             }
         }
         if (playerStateManager.IsPlayerTreadState()) {
@@ -45,8 +104,9 @@ public class PlayerAnimationController : MonoBehaviour
             }
         }
         if (playerStateManager.IsPlayerWalkState()) {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName(ConstantsManager.animationWalkName)) {
-                animator.Play(ConstantsManager.animationWalkName);
+            animationName = GetItemAnimationName(ConstantsManager.animationWalkBase);
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName)) {
+                animator.Play(animationName);
             }
         }
     }

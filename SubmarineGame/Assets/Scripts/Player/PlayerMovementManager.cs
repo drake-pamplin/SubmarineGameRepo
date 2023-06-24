@@ -128,6 +128,10 @@ public class PlayerMovementManager : MonoBehaviour
             ((movementForwardInput == 0 && (movementHorizontalInput != 0 || verticalSwimInput != 0)) && InputManager.instance.GetSprintInput());
     }
 
+    public bool IsPlayerGrounded() {
+        return referenceCharacterController.isGrounded;
+    }
+
     public bool IsPlayerSprinting() {
         return ((movementForwardInput > 0) && InputManager.instance.GetSprintInput()) ||
             ((movementForwardInput == 0 && movementHorizontalInput != 0) && InputManager.instance.GetSprintInput());
