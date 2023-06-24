@@ -16,6 +16,7 @@ public class PlayerStateManager : MonoBehaviour
     
     public enum PlayerState {
         breastStroke,
+        freestyleStroke,
         idle,
         sprint,
         tread,
@@ -23,6 +24,7 @@ public class PlayerStateManager : MonoBehaviour
     }
     private PlayerState playerState = PlayerState.idle;
     public bool IsPlayerBreastStrokeState() { return playerState == PlayerState.breastStroke; }
+    public bool IsPlayerFreestyleStrokeState() { return playerState == PlayerState.freestyleStroke; }
     public bool IsPlayerIdleState() { return playerState == PlayerState.idle; }
     public bool IsPlayerSprintState() { return playerState == PlayerState.sprint; }
     public bool IsPlayerTreadState() { return playerState == PlayerState.tread; }
@@ -72,19 +74,26 @@ public class PlayerStateManager : MonoBehaviour
                 return;
             }
             playerState = PlayerState.idle;
+            return;
         }
 
         /*
         Priority:
+        - FreestyleStroke
         - BreastStroke
         - Tread
         */
         if (IsMovementStateWater()) {
+            if (playerMovementManager.IsPlayerFreestyleStroking()) {
+                playerState = PlayerState.freestyleStroke;
+                return;
+            }
             if (playerMovementManager.IsPlayerBreastStroking()) {
                 playerState = PlayerState.breastStroke;
                 return;
             }
             playerState = PlayerState.tread;
+            return;
         }
     }
 }

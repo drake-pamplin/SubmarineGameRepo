@@ -7,6 +7,10 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [Header ("Player Variables")]
+    public float playerBreastStrokeSpeed;
+    public float GetPlayerBreastStrokeSpeed() { return playerBreastStrokeSpeed; }
+    public float playerFreestyleStrokeSpeed;
+    public float GetPlayerFreestyleStrokeSpeed() { return playerFreestyleStrokeSpeed; }
     public float playerJumpForce;
     public float GetPlayerJumpForce() { return playerJumpForce; }
     public float playerLookClamp;
@@ -17,8 +21,6 @@ public class GameManager : MonoBehaviour
     public float GetPlayerLookSensitivityVertical() { return playerLookSensitivityVertical; }
     public float playerSprintSpeed;
     public float GetPlayerSprintSpeed() { return playerSprintSpeed; }
-    public float playerSwimSpeed;
-    public float GetPlayerSwimSpeed() { return playerSwimSpeed; }
     public float playerWalkSpeed;
     public float GetPlayerWalkSpeed() { return playerWalkSpeed; }
 

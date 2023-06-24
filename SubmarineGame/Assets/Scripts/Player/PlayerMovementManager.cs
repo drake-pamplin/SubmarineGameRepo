@@ -55,15 +55,10 @@ public class PlayerMovementManager : MonoBehaviour
     private void HandleGroundedMoveInput() {
         bool isGrounded = referenceCharacterController.isGrounded;
 
-        // if (IsPlayerSprinting()) {
-        //     movementVector *= GameManager.instance.GetPlayerSprintSpeed();
-        // } else {
-        //     movementVector *= GameManager.instance.GetPlayerWalkSpeed();
-        // }
         movementVector = transform.TransformDirection(movementVector);
-        Debug.Log(movementVector);
         movementVector = movementVector.normalized;
-        referenceCharacterController.Move(movementVector * (IsPlayerSprinting() ? GameManager.instance.GetPlayerSprintSpeed() : GameManager.instance.GetPlayerWalkSpeed()) * Time.deltaTime);
+        float moveSpeed = IsPlayerSprinting() ? GameManager.instance.GetPlayerSprintSpeed() : GameManager.instance.GetPlayerWalkSpeed();
+        referenceCharacterController.Move(movementVector * moveSpeed * Time.deltaTime);
 
         if (isGrounded) {
             verticalVector.y = 0;
@@ -106,8 +101,8 @@ public class PlayerMovementManager : MonoBehaviour
         Vector3 verticalSwimVector = new Vector3(0, verticalSwimInput, 0);
         movementVector += verticalSwimVector;
         movementVector = movementVector.normalized;
-        movementVector *= GameManager.instance.GetPlayerSwimSpeed();
-        referenceCharacterController.Move(movementVector * Time.deltaTime);
+        float moveSpeed = IsPlayerSprinting() ? GameManager.instance.GetPlayerFreestyleStrokeSpeed() : GameManager.instance.GetPlayerBreastStrokeSpeed();
+        referenceCharacterController.Move(movementVector * moveSpeed * Time.deltaTime);
 
         if (verticalVector.y <= GameManager.instance.GetWorldWaterIntertiaValue() && verticalVector.y >= (-1 * GameManager.instance.GetWorldWaterIntertiaValue())) {
             verticalVector.y = 0;
@@ -126,6 +121,11 @@ public class PlayerMovementManager : MonoBehaviour
 
     public bool IsPlayerBreastStroking() {
         return movementForwardInput != 0 || movementHorizontalInput != 0 || verticalSwimInput != 0;
+    }
+
+    public bool IsPlayerFreestyleStroking() {
+        return ((movementForwardInput > 0) && InputManager.instance.GetSprintInput()) ||
+            ((movementForwardInput == 0 && (movementHorizontalInput != 0 || verticalSwimInput != 0)) && InputManager.instance.GetSprintInput());
     }
 
     public bool IsPlayerSprinting() {

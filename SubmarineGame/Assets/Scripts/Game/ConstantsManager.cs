@@ -5,6 +5,7 @@ using UnityEngine;
 public class ConstantsManager : MonoBehaviour
 {
     public static readonly string animationBreastStrokeName = "BreastStroke";
+    public static readonly string animationFreestyleStrokeName = "FreestyleStroke";
     public static readonly string animationIdleName = "Idle";
     public static readonly string animationRunName = "Run";
     public static readonly string animationTreadName = "Tread";

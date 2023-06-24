@@ -24,6 +24,11 @@ public class PlayerAnimationController : MonoBehaviour
                 animator.Play(ConstantsManager.animationBreastStrokeName);
             }
         }
+        if (playerStateManager.IsPlayerFreestyleStrokeState()) {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName(ConstantsManager.animationFreestyleStrokeName)) {
+                animator.Play(ConstantsManager.animationFreestyleStrokeName);
+            }
+        }
         if (playerStateManager.IsPlayerIdleState()) {
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName(ConstantsManager.animationIdleName)) {
                 animator.Play(ConstantsManager.animationIdleName);
