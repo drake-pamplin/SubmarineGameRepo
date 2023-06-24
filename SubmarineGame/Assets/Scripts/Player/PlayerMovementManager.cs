@@ -47,7 +47,7 @@ public class PlayerMovementManager : MonoBehaviour
         HandlePlayerMoveInput();
     }
 
-    private GameObject GetCameraObject() {
+    public GameObject GetCameraObject() {
         GameObject cameraObject = transform.Find(ConstantsManager.gameObjectCameraName).gameObject;
         return cameraObject;
     }

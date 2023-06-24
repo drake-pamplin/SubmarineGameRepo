@@ -21,13 +21,7 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current.qKey.wasPressedThisFrame) {
-            if (Cursor.lockState == CursorLockMode.Locked) {
-                Cursor.lockState = CursorLockMode.None;
-            } else {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-        }
+        
     }
 
     public int GetForwardInput() {
@@ -65,6 +59,16 @@ public class InputManager : MonoBehaviour
         }
         if (Keyboard.current.dKey.wasReleasedThisFrame) {
             inputValue--;
+        }
+
+        return inputValue;
+    }
+
+    public bool GetInteractInput() {
+        bool inputValue = false;
+
+        if (Keyboard.current.eKey.wasPressedThisFrame) {
+            inputValue = true;
         }
 
         return inputValue;

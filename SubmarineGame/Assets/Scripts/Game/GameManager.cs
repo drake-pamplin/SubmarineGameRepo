@@ -24,6 +24,12 @@ public class GameManager : MonoBehaviour
     public float playerWalkSpeed;
     public float GetPlayerWalkSpeed() { return playerWalkSpeed; }
 
+    [Header ("Raycast Variables")]
+    public float raycastInteractDistance;
+    public float GetRaycastInteractDistance() { return raycastInteractDistance; }
+    public float raycastOriginHeight;
+    public float GetRaycastOriginHeight() { return raycastOriginHeight; }
+
     [Header ("World Variables")]
     public float worldGravityValue;
     public float GetWorldGravityValue() { return worldGravityValue; }
