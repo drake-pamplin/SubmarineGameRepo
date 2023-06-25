@@ -32,6 +32,12 @@ public class PlayerMovementManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!GameManager.instance.IsGameStateGame()) {
+            movementVector = Vector3.zero;
+            verticalSwimInput = 0;
+            return;
+        }
+        
         ProcessPlayerJumpInput();
         ProcessPlayerLookInput();
         ProcessPlayerMoveInput();

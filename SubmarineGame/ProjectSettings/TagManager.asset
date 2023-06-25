@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Canvas
   - Item
+  - ItemReference
   layers:
   - Default
   - TransparentFX

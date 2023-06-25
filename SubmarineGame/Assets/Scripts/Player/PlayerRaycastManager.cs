@@ -18,6 +18,10 @@ public class PlayerRaycastManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!GameManager.instance.IsGameStateGame()) {
+            return;
+        }
+        
         CheckForInteractableInRange();
     }
 

@@ -6,6 +6,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    [Header ("Interface Variables")]
+    public int interfaceInventoryTileHeight;
+    public int GetInterfaceInventoryTileHeight() { return interfaceInventoryTileHeight; }
+    public int interfaceInventoryTileSpacing;
+    public int GetInterfaceInventoryTileSpacing() { return interfaceInventoryTileSpacing; }
+    
     [Header ("Player Variables")]
     public float playerBreastStrokeSpeed;
     public float GetPlayerBreastStrokeSpeed() { return playerBreastStrokeSpeed; }
@@ -30,6 +36,17 @@ public class GameManager : MonoBehaviour
     public float raycastOriginHeight;
     public float GetRaycastOriginHeight() { return raycastOriginHeight; }
 
+    // State Variables
+    public enum GameState {
+        game,
+        menu
+    }
+    private GameState gameState = GameState.game;
+    public bool IsGameStateGame() { return gameState == GameState.game; }
+    private void SetGameStateGame() { gameState = GameState.game; }
+    public bool IsGameStateMenu() { return gameState == GameState.menu; }
+    private void SetGameStateMenu() { gameState = GameState.menu; }
+
     [Header ("World Variables")]
     public float worldGravityValue;
     public float GetWorldGravityValue() { return worldGravityValue; }
@@ -51,6 +68,18 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateGameState();
+    }
+
+    private void UpdateGameState() {
+        if (InterfaceManager.instance.IsDisplayOpen()) {
+            if (IsGameStateGame()) {
+                SetGameStateMenu();
+            }
+        } else {
+            if (IsGameStateMenu()) {
+                SetGameStateGame();
+            }
+        }
     }
 }

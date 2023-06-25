@@ -7,6 +7,7 @@ public class PrefabManager : MonoBehaviour
     public static PrefabManager instance;
 
     private Dictionary<string, GameObject> prefabLibrary = new Dictionary<string, GameObject>();
+    public GameObject GetPrefabInventoryScreenObject() { return prefabLibrary[ConstantsManager.gameObjectInventoryScreenObjectName]; }
     public GameObject GetPrefabItem() { return prefabLibrary[ConstantsManager.gameObjectItemName]; }
     public GameObject GetPrefabNetObject() { return prefabLibrary[ConstantsManager.gameObjectNetObjectName]; }
     public GameObject GetPrefabPickUpText() { return prefabLibrary[ConstantsManager.gameObjectItemPromptObjectName]; }
@@ -29,6 +30,9 @@ public class PrefabManager : MonoBehaviour
 
     private void LoadPrefabs() {
         string fileName = "";
+
+        fileName = ConstantsManager.filePrefabValue + ConstantsManager.fileInterfaceValue + ConstantsManager.gameObjectInventoryScreenObjectName;
+        prefabLibrary.Add(ConstantsManager.gameObjectInventoryScreenObjectName ,Resources.Load<GameObject>(fileName));
 
         fileName = ConstantsManager.filePrefabValue + ConstantsManager.fileWorldValue + ConstantsManager.gameObjectItemName;
         prefabLibrary.Add(ConstantsManager.gameObjectItemName ,Resources.Load<GameObject>(fileName));

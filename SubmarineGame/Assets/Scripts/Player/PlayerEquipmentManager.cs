@@ -36,6 +36,12 @@ public class PlayerEquipmentManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ProcessInventoryInput();
+        
+        if (!GameManager.instance.IsGameStateGame()) {
+            return;
+        }
+        
         ProcessDropInput();
         ProcessWaterState();
     }
@@ -67,6 +73,14 @@ public class PlayerEquipmentManager : MonoBehaviour
         );
         Item itemDropScript = itemDrop.GetComponent<Item>();
         itemDropScript.CloneItemValues(itemToDrop);
+    }
+
+    private void ProcessInventoryInput() {
+        if (!InputManager.instance.GetInventoryInput()) {
+            return;
+        }
+
+        InterfaceManager.instance.ToggleInventoryDisplay();
     }
 
     private void ProcessWaterState() {

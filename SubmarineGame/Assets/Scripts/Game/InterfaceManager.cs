@@ -7,6 +7,7 @@ public class InterfaceManager : MonoBehaviour
 {
     public static InterfaceManager instance;
 
+    private GameObject interfaceDisplayObject = null;
     private GameObject pickUpTextObject = null;
 
     void Awake() {
@@ -23,6 +24,28 @@ public class InterfaceManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public bool IsDisplayOpen() {
+        if (interfaceDisplayObject != null) {
+            return true;
+        }
+        
+        return false;
+    }
+
+    public void ToggleInventoryDisplay() {
+        if (interfaceDisplayObject == null) {
+            interfaceDisplayObject = Instantiate(
+                PrefabManager.instance.GetPrefabInventoryScreenObject(),
+                GameObject.FindGameObjectWithTag(ConstantsManager.tagCanvas).transform
+            );
+            return;
+        } else {
+            Destroy(interfaceDisplayObject);
+            interfaceDisplayObject = null;
+            return;
+        }
     }
 
     public void UpdatePickupText(string itemDisplayName) {

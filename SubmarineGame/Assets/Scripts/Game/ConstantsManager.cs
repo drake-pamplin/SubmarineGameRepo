@@ -25,6 +25,8 @@ public class ConstantsManager : MonoBehaviour
     public static readonly string gameObjectAnimationName = "Animation";
     public static readonly string gameObjectBackgroundName = "Background";
     public static readonly string gameObjectCameraName = "Camera";
+    public static readonly string gameObjectDisplaySpaceName = "DisplaySpace";
+    public static readonly string gameObjectInventoryScreenObjectName = "InventoryScreenObject";
     public static readonly string gameObjectItemName = "Item";
     public static readonly string gameObjectItemPromptObjectName = "ItemPromptObject";
     public static readonly string gameObjectNetObjectName = "net";

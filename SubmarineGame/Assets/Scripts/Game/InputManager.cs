@@ -84,6 +84,16 @@ public class InputManager : MonoBehaviour
         return inputValue;
     }
 
+    public bool GetInventoryInput() {
+        bool inputValue = false;
+
+        if (Keyboard.current.tabKey.wasPressedThisFrame) {
+            inputValue = true;
+        }
+
+        return inputValue;
+    }
+
     public bool GetJumpInput() {
         bool inputValue = false;
 

@@ -17,6 +17,10 @@ public class PlayerInteractionManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!GameManager.instance.IsGameStateGame()) {
+            return;
+        }
+        
         ProcessInteractionInput();
     }
 
