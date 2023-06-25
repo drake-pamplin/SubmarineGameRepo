@@ -7,8 +7,12 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [Header ("Interface Variables")]
-    public int interfaceInventoryTileHeight;
-    public int GetInterfaceInventoryTileHeight() { return interfaceInventoryTileHeight; }
+    public int interfaceDisplayHeight;
+    public int GetInterfaceDisplayHeight() { return interfaceDisplayHeight; }
+    public int interfaceDisplayWidth;
+    public int GetInterfaceDisplayWidth() { return interfaceDisplayWidth; }
+    public int interfaceInventoryTileSideLength;
+    public int GetInterfaceInventoryTileSideLength() { return interfaceInventoryTileSideLength; }
     public int interfaceInventoryTileSpacing;
     public int GetInterfaceInventoryTileSpacing() { return interfaceInventoryTileSpacing; }
     

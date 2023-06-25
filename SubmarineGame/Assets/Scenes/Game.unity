@@ -460,7 +460,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed262ecc0ed741d46aa3de764559b738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interfaceInventoryTileHeight: 0
+  interfaceDisplayHeight: 800
+  interfaceDisplayWidth: 1000
+  interfaceInventoryTileSideLength: 100
   interfaceInventoryTileSpacing: 0
   playerBreastStrokeSpeed: 2.5
   playerFreestyleStrokeSpeed: 5
@@ -1203,6 +1205,10 @@ PrefabInstance:
       propertyPath: itemId
       value: net
       objectReference: {fileID: 0}
+    - target: {fileID: 5585597634759262408, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
+      propertyPath: itemIcon
+      value: 
+      objectReference: {fileID: 2800000, guid: b3ea2e5e3bc675a45ba99b191e1a1331, type: 3}
     - target: {fileID: 5585597634759262408, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
       propertyPath: itemDisplayName
       value: Net

@@ -24,6 +24,9 @@ public class PlayerEquipmentManager : MonoBehaviour
     public bool IsItemEquipped() {
         return equippedObject.Length > 0;
     }
+
+    private List<Item> inventory = new List<Item>();
+    public List<Item> GetInventory() { return inventory; }
     
     // Start is called before the first frame update
     void Start()
