@@ -26,6 +26,7 @@ public class ConstantsManager : MonoBehaviour
     public static readonly string gameObjectBackgroundName = "Background";
     public static readonly string gameObjectCameraName = "Camera";
     public static readonly string gameObjectDisplaySpaceName = "DisplaySpace";
+    public static readonly string gameObjectInventoryItemTileName = "ItemTile";
     public static readonly string gameObjectInventoryScreenObjectName = "InventoryScreenObject";
     public static readonly string gameObjectItemName = "Item";
     public static readonly string gameObjectItemPromptObjectName = "ItemPromptObject";
@@ -37,6 +38,7 @@ public class ConstantsManager : MonoBehaviour
     public static readonly string tagCanvas = "Canvas";
     public static readonly string tagItem = "Item";
     public static readonly string tagItemReference = "ItemReference";
+    public static readonly string tagPlayer = "Player";
 
     public static readonly string textPickUpBase = "Press E to pick up";
 }

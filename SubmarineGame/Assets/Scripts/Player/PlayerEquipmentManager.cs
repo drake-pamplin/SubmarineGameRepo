@@ -49,6 +49,10 @@ public class PlayerEquipmentManager : MonoBehaviour
         ProcessWaterState();
     }
 
+    public void PickUpItem(Item item) {
+        inventory.Add(item);
+    }
+
     private void ProcessDropInput() {
         if (!InputManager.instance.GetDropInput()) {
             return;

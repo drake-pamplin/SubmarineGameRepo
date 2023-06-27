@@ -460,8 +460,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed262ecc0ed741d46aa3de764559b738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interfaceDisplayHeight: 800
-  interfaceDisplayWidth: 1000
+  interfaceInventoryDisplayHeight: 0
+  interfaceInventoryDisplayWidth: 0
   interfaceInventoryTileSideLength: 100
   interfaceInventoryTileSpacing: 0
   playerBreastStrokeSpeed: 2.5
@@ -843,7 +843,7 @@ GameObject:
   - component: {fileID: 1206596473}
   m_Layer: 0
   m_Name: PlayerObject
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

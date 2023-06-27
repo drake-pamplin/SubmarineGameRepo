@@ -39,7 +39,7 @@ public class PlayerInteractionManager : MonoBehaviour
 
         Item item = interactableObject.GetComponent<Item>();
         Debug.Log("Picked up " + item.GetItemDisplayName());
-        playerEquipmentManager.EquipItem(item);
+        playerEquipmentManager.PickUpItem(item);
         Destroy(interactableObject);
     }
 }

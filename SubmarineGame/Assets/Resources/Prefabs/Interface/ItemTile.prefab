@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDisplayName: 
+  itemIcon: {fileID: 0}
   itemId: 
 --- !u!1 &5798095788591492790
 GameObject:
