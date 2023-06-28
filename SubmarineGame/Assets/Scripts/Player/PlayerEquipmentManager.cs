@@ -9,12 +9,11 @@ public class PlayerEquipmentManager : MonoBehaviour
     private PlayerStateManager playerStateManager;
     
     private Item[] equippedObject = new Item[0];
-    public Item GetEquippedItem() {
-        return equippedObject[0];
+    public Item[] GetEquippedItem() {
+        return equippedObject;
     }
-    public void EquipItem(Item item) {
-        equippedObject = new Item[] { item };
-        Debug.Log("Equipped " + item.GetItemDisplayName());
+    public void EquipItem(Item[] item) {
+        equippedObject = item.Length == 0 ? new Item[0] : new Item[] { item[0] };
         playerAnimationController.HandleItemEquipped();
     }
     private void UnequipItem() {
@@ -27,6 +26,15 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     private List<Item> inventory = new List<Item>();
     public List<Item> GetInventory() { return inventory; }
+    private Dictionary<int, Item> inventoryHotBar = new Dictionary<int, Item>();
+    public Dictionary<int, Item> GetInventoryHotBar() { return inventoryHotBar; }
+    public Item[] GetItemFromInventoryHotBar(int index) {
+        Item[] item = new Item[0];
+        if (inventoryHotBar.TryGetValue(index, out Item itemFound)) {
+            item = new Item[] { itemFound };
+        }
+        return item;
+    }
     
     // Start is called before the first frame update
     void Start()
@@ -50,6 +58,20 @@ public class PlayerEquipmentManager : MonoBehaviour
     }
 
     public void PickUpItem(Item item) {
+        if (inventoryHotBar.Count < 10) {
+            int emptySlot = -1;
+            for (int slotIndex = 1; slotIndex <= 10; slotIndex++) {
+                if (emptySlot > 0) {
+                    continue;
+                }
+                Item[] itemInSlot = GetItemFromInventoryHotBar(slotIndex);
+                if (itemInSlot.Length == 0) {
+                    emptySlot = slotIndex;
+                }
+            }
+            inventoryHotBar.Add(emptySlot, item);
+            return;
+        }
         inventory.Add(item);
     }
 
@@ -100,5 +122,14 @@ public class PlayerEquipmentManager : MonoBehaviour
         }
 
         UnequipItem();
+    }
+
+    public void UpdateEquippedObject() {
+        int hotBarIndex = InterfaceManager.instance.GetHotBarIndex();
+        Item[] hotBarItem = GetItemFromInventoryHotBar(hotBarIndex);
+        if (equippedObject.Length == 0 && hotBarItem.Length == 0) {
+            return;
+        }
+        EquipItem(hotBarItem.Length == 0 ? new Item[0] : hotBarItem);
     }
 }

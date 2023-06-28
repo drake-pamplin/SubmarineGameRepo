@@ -8,6 +8,7 @@ public class InterfaceManager : MonoBehaviour
     public static InterfaceManager instance;
 
     private int hotBarIndex = 1;
+    public int GetHotBarIndex() { return hotBarIndex; }
     /*
         Menu layers: 
         - 0: interfaceDisplayObject
@@ -28,7 +29,7 @@ public class InterfaceManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateHotBarSlots();
     }
     
     public void HotBarScrollHighlight(bool up) {
@@ -97,6 +98,21 @@ public class InterfaceManager : MonoBehaviour
             Destroy(interfaceDisplayObject);
             interfaceDisplayObject = null;
             return;
+        }
+    }
+
+    public void UpdateHotBarSlots() {
+        GameObject slotContainer = GameObject.FindGameObjectWithTag(ConstantsManager.tagHotBar).transform.Find(ConstantsManager.gameObjectBackgroundName).gameObject;
+        for (int slotIndex = 1; slotIndex <= 10; slotIndex++) {
+            Item[] item = GameObject.FindGameObjectWithTag(ConstantsManager.tagPlayer).GetComponent<PlayerEquipmentManager>().GetItemFromInventoryHotBar(slotIndex);
+            GameObject slotObject = slotContainer.transform.Find(ConstantsManager.gameObjectHotBarSlotBase + ConstantsManager.splitCharUnderscore + slotIndex).gameObject;
+            if (item.Length == 0) {
+                slotObject.GetComponent<Item>().CloneItemValues(new Item());
+                slotObject.transform.Find(ConstantsManager.gameObjectIconName).gameObject.GetComponent<Image>().sprite = null;
+                continue;
+            }
+            slotObject.GetComponent<Item>().CloneItemValues(item[0]);
+            slotObject.transform.Find(ConstantsManager.gameObjectIconName).gameObject.GetComponent<Image>().sprite = item[0].GetItemIcon();
         }
     }
 

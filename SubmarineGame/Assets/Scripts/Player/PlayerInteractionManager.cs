@@ -52,5 +52,6 @@ public class PlayerInteractionManager : MonoBehaviour
         }
 
         InterfaceManager.instance.HotBarScrollHighlight(scrollInput > 0);
+        GetComponent<PlayerEquipmentManager>().UpdateEquippedObject();
     }
 }

@@ -34,7 +34,7 @@ public class PlayerAnimationController : MonoBehaviour
         if (!playerEquipmentManager.IsItemEquipped()) {
             animationName = baseName;
         } else {
-            Item equippedItem = playerEquipmentManager.GetEquippedItem();
+            Item equippedItem = playerEquipmentManager.GetEquippedItem()[0];
             string itemId = equippedItem.GetItemId();
             animationName = baseName + ConstantsManager.splitCharUnderscore + itemId;
         }
@@ -46,7 +46,7 @@ public class PlayerAnimationController : MonoBehaviour
         Destroy(displayObject);
         
         if (playerEquipmentManager.IsItemEquipped()) {
-            Item equippedItem = playerEquipmentManager.GetEquippedItem();
+            Item equippedItem = playerEquipmentManager.GetEquippedItem()[0];
             string itemId = equippedItem.GetItemId();
 
             
