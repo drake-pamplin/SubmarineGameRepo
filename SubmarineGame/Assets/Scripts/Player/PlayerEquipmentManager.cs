@@ -35,6 +35,9 @@ public class PlayerEquipmentManager : MonoBehaviour
         }
         return item;
     }
+    private void RemoveItemFromInventoryHotBar(int index) {
+        inventoryHotBar.Remove(index);
+    }
     
     // Start is called before the first frame update
     void Start()
@@ -70,6 +73,9 @@ public class PlayerEquipmentManager : MonoBehaviour
                 }
             }
             inventoryHotBar.Add(emptySlot, item);
+            if (emptySlot == InterfaceManager.instance.GetHotBarIndex()) {
+                UpdateEquippedObject();
+            }
             return;
         }
         inventory.Add(item);
@@ -94,6 +100,7 @@ public class PlayerEquipmentManager : MonoBehaviour
 
         Item itemToDrop = equippedObject[0];
         UnequipItem();
+        RemoveItemFromInventoryHotBar(InterfaceManager.instance.GetHotBarIndex());
 
         GameObject itemDrop = Instantiate(
             PrefabManager.instance.GetPrefabItem(),
