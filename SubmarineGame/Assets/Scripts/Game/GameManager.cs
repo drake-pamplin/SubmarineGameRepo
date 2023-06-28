@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public int GetInterfaceInventoryDisplayHeight() { return interfaceInventoryDisplayHeight; }
     public int interfaceInventoryDisplayWidth;
     public int GetInterfaceInventoryDisplayWidth() { return interfaceInventoryDisplayWidth; }
+    public int interfaceHotBarTileSideLength;
+    public int GetInterfaceHotBarTileSideLength() { return interfaceHotBarTileSideLength; }
     public int interfaceInventoryTileSideLength;
     public int GetInterfaceInventoryTileSideLength() { return interfaceInventoryTileSideLength; }
     public int interfaceInventoryTileSpacing;

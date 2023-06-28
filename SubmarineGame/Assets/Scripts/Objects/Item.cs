@@ -6,8 +6,8 @@ public class Item : MonoBehaviour
 {
     public string itemDisplayName;
     public string GetItemDisplayName() { return itemDisplayName; }
-    public Texture itemIcon;
-    public Texture GetItemIcon() { return itemIcon; }
+    public Sprite itemIcon;
+    public Sprite GetItemIcon() { return itemIcon; }
     public string itemId;
     public string GetItemId() { return itemId; }
 

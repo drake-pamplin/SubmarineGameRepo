@@ -22,6 +22,7 @@ public class PlayerInteractionManager : MonoBehaviour
         }
         
         ProcessInteractionInput();
+        ProcessScrollInput();
     }
 
     private void ProcessInteractionInput() {
@@ -41,5 +42,15 @@ public class PlayerInteractionManager : MonoBehaviour
         Debug.Log("Picked up " + item.GetItemDisplayName());
         playerEquipmentManager.PickUpItem(item);
         Destroy(interactableObject);
+    }
+
+    private void ProcessScrollInput() {
+        float scrollInput = InputManager.instance.GetScrollValue();
+
+        if (scrollInput == 0) {
+            return;
+        }
+
+        InterfaceManager.instance.HotBarScrollHighlight(scrollInput > 0);
     }
 }

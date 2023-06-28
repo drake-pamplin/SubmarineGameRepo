@@ -113,6 +113,14 @@ public class InputManager : MonoBehaviour
         return inputValue;
     }
 
+    public float GetScrollValue() {
+        float inputValue = 0;
+
+        inputValue = Mouse.current.scroll.y.ReadValue();
+
+        return inputValue;
+    }
+
     public bool GetSprintInput() {
         bool inputValue = false;
 

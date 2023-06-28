@@ -7,6 +7,7 @@ public class InterfaceManager : MonoBehaviour
 {
     public static InterfaceManager instance;
 
+    private int hotBarIndex = 1;
     /*
         Menu layers: 
         - 0: interfaceDisplayObject
@@ -28,6 +29,24 @@ public class InterfaceManager : MonoBehaviour
     void Update()
     {
         
+    }
+    
+    public void HotBarScrollHighlight(bool up) {
+        GameObject highlightObject = GameObject.FindGameObjectWithTag(ConstantsManager.tagHotBar).transform
+            .Find(ConstantsManager.gameObjectBackgroundName)
+            .Find(ConstantsManager.gameObjectHighlightContainerName)
+            .Find(ConstantsManager.gameObjectHighlightName).gameObject;
+        int newIndex = hotBarIndex + (1 * (up ? 1 : -1));
+        if (newIndex > 10) {
+            newIndex = 1;
+        }
+        if (newIndex < 1) {
+            newIndex = 10;
+        }
+        hotBarIndex = newIndex;
+
+        int xCoord = (hotBarIndex - 1) * GameManager.instance.GetInterfaceHotBarTileSideLength();
+        highlightObject.transform.localPosition = new Vector3(xCoord, highlightObject.transform.localPosition.y, 0);
     }
 
     public bool IsDisplayOpen() {
@@ -60,12 +79,17 @@ public class InterfaceManager : MonoBehaviour
             for (int itemIndex = 0; itemIndex < inventory.Count; itemIndex++) {
                 GameObject itemTile = Instantiate(
                     PrefabManager.instance.GetPrefabInventoryItemTile(),
-                    GameObject.FindGameObjectWithTag(ConstantsManager.tagCanvas).transform
+                    displayArea.transform
                 );
-                float xCoord = itemTile.GetComponent<Transform>().localPosition.x + (((float)itemIndex % (float)spacesWide) * GameManager.instance.GetInterfaceInventoryTileSideLength());
-                float yCoord = itemTile.GetComponent<Transform>().localPosition.y - (((float)itemIndex / (float)spacesWide)  * GameManager.instance.GetInterfaceInventoryTileSideLength());
+                float xCoord = itemTile.GetComponent<Transform>().localPosition.x + (((float)itemIndex % (float)spacesWide) * (float)GameManager.instance.GetInterfaceInventoryTileSideLength());
+                float yCoord = itemTile.GetComponent<Transform>().localPosition.y - (((float)itemIndex / (float)spacesWide)  * (float)GameManager.instance.GetInterfaceInventoryTileSideLength());
 
                 itemTile.GetComponent<Transform>().localPosition = new Vector3(xCoord, yCoord, 0);
+
+                Sprite sprite = inventory[itemIndex].GetItemIcon();
+                Debug.Log(sprite.name);
+                GameObject iconObject = itemTile.transform.Find(ConstantsManager.gameObjectIconName).gameObject;
+                iconObject.GetComponent<Image>().sprite = sprite;
             }
 
             return;
