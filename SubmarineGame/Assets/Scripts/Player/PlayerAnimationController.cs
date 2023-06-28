@@ -60,6 +60,22 @@ public class PlayerAnimationController : MonoBehaviour
         animator.Play(animationName);
     }
 
+    public bool IsPlayerEquipping() {
+        string equipStateName = GetItemAnimationName(ConstantsManager.animationEquipBase);
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(equipStateName)) {
+            return true;
+        }
+        return false;
+    }
+    
+    public bool IsPlayerThrowing() {
+        string throwStateName = GetItemAnimationName(ConstantsManager.animationThrowBase);
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(throwStateName)) {
+            return true;
+        }
+        return false;
+    }
+
     private void ProcessAnimationState() {
         string animationName = "";
         if (animator.GetCurrentAnimatorStateInfo(0).IsName(ConstantsManager.animationDefaultName)) {
@@ -71,14 +87,22 @@ public class PlayerAnimationController : MonoBehaviour
             return;
         }
 
-        string equipStateName = GetItemAnimationName(ConstantsManager.animationEquipBase);
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName(equipStateName)) {
+        if (IsPlayerEquipping()) {
+            return;
+        }
+        if (IsPlayerThrowing()) {
             return;
         }
         
         if (playerStateManager.IsPlayerBreastStrokeState()) {
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName(ConstantsManager.animationBreastStrokeName)) {
                 animator.Play(ConstantsManager.animationBreastStrokeName);
+            }
+        }
+        if (playerStateManager.IsPlayerChargingState()) {
+            animationName = GetItemAnimationName(ConstantsManager.animationChargeBase);
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName)) {
+                animator.Play(animationName);
             }
         }
         if (playerStateManager.IsPlayerFreestyleStrokeState()) {
@@ -95,6 +119,13 @@ public class PlayerAnimationController : MonoBehaviour
         if (playerStateManager.IsPlayerSprintState()) {
             animationName = GetItemAnimationName(ConstantsManager.animationRunBase);
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName)) {
+                animator.Play(animationName);
+            }
+        }
+        if (playerStateManager.IsPlayerThrowingState()) {
+            animationName = GetItemAnimationName(ConstantsManager.animationThrowBase);
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName)) {
+                Debug.Log("Throwing");
                 animator.Play(animationName);
             }
         }

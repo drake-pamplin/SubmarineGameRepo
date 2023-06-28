@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerStateManager : MonoBehaviour
 {
+    private PlayerInteractionManager playerInteractionManager;
     private PlayerMovementManager playerMovementManager;
     
     public enum MovementState {
@@ -16,23 +17,31 @@ public class PlayerStateManager : MonoBehaviour
     
     public enum PlayerState {
         breastStroke,
+        charging,
         freestyleStroke,
         idle,
         sprint,
+        throwing,
         tread,
         walk
     }
     private PlayerState playerState = PlayerState.idle;
     public bool IsPlayerBreastStrokeState() { return playerState == PlayerState.breastStroke; }
+    public bool IsPlayerChargingState() { return playerState == PlayerState.charging; }
     public bool IsPlayerFreestyleStrokeState() { return playerState == PlayerState.freestyleStroke; }
     public bool IsPlayerIdleState() { return playerState == PlayerState.idle; }
     public bool IsPlayerSprintState() { return playerState == PlayerState.sprint; }
+    public bool IsPlayerThrowingState() { return playerState == PlayerState.throwing; }
     public bool IsPlayerTreadState() { return playerState == PlayerState.tread; }
     public bool IsPlayerWalkState() { return playerState == PlayerState.walk; }
+
+    private bool throwFlag = false;
+    public void TriggerThrowFlag() { throwFlag = true; }
     
     // Start is called before the first frame update
     void Start()
     {
+        playerInteractionManager = GetComponent<PlayerInteractionManager>();
         playerMovementManager = GetComponent<PlayerMovementManager>();
     }
 
@@ -60,11 +69,22 @@ public class PlayerStateManager : MonoBehaviour
     private void ProcessPlayerState() {
         /*
         Priority:
+        - Charging
+        - Throwing
         - Sprint
         - Walk
         - Idle
         */
         if (IsMovementStateGrounded()) {
+            if (playerInteractionManager.IsPlayerCharging()) {
+                playerState = PlayerState.charging;
+                return;
+            }
+            if (throwFlag) {
+                playerState = PlayerState.throwing;
+                throwFlag = false;
+                return;
+            }
             if (playerMovementManager.IsPlayerSprinting()) {
                 playerState = PlayerState.sprint;
                 return;

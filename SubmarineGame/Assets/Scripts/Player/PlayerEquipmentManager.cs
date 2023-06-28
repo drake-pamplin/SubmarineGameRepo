@@ -121,6 +121,9 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     private void ProcessWaterState() {
         if (!playerStateManager.IsMovementStateWater()) {
+            if (!IsItemEquipped() && GetItemFromInventoryHotBar(InterfaceManager.instance.GetHotBarIndex()).Length == 1) {
+                UpdateEquippedObject();
+            }
             return;
         }
 

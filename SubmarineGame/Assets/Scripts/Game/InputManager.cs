@@ -104,6 +104,10 @@ public class InputManager : MonoBehaviour
         return inputValue;
     }
 
+    public bool GetLeftClickDown() {
+        return Mouse.current.leftButton.isPressed;
+    }
+
     public Vector2 GetMouseLookInput() {
         Vector2 inputValue = Vector2.zero;
 

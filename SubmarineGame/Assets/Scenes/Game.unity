@@ -594,6 +594,8 @@ MonoBehaviour:
   playerLookSensitivityHorizontal: 0.25
   playerLookSensitivityVertical: 0.25
   playerSprintSpeed: 10
+  playerThrowChargeTime: 1
+  playerThrowMaxForce: 100
   playerWalkSpeed: 5
   raycastInteractDistance: 3
   raycastOriginHeight: 1.5

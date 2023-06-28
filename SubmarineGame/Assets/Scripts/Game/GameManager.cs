@@ -33,6 +33,10 @@ public class GameManager : MonoBehaviour
     public float GetPlayerLookSensitivityVertical() { return playerLookSensitivityVertical; }
     public float playerSprintSpeed;
     public float GetPlayerSprintSpeed() { return playerSprintSpeed; }
+    public float playerThrowChargeTime;
+    public float GetPlayerThrowChargeTime() { return playerThrowChargeTime; }
+    public float playerThrowMaxForce;
+    public float GetPlayerThrowMaxForce() { return playerThrowMaxForce; }
     public float playerWalkSpeed;
     public float GetPlayerWalkSpeed() { return playerWalkSpeed; }
 

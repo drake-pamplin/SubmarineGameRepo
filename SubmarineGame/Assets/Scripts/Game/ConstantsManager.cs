@@ -5,6 +5,7 @@ using UnityEngine;
 public class ConstantsManager : MonoBehaviour
 {
     public static readonly string animationBreastStrokeName = "BreastStroke";
+    public static readonly string animationChargeBase = "Charge";
     public static readonly string animationDefaultName = "Default";
     public static readonly string animationEquipBase = "Equip";
     public static readonly string animationEquipName = "Equip";
@@ -13,6 +14,7 @@ public class ConstantsManager : MonoBehaviour
     public static readonly string animationIdleName = "Idle";
     public static readonly string animationRunBase = "Run";
     public static readonly string animationRunName = "Run";
+    public static readonly string animationThrowBase = "Throw";
     public static readonly string animationTreadName = "Tread";
     public static readonly string animationWalkBase = "Walk";
     public static readonly string animationWalkName = "Walk";
@@ -37,6 +39,10 @@ public class ConstantsManager : MonoBehaviour
     public static readonly string gameObjectItemPromptObjectName = "ItemPromptObject";
     public static readonly string gameObjectNetObjectName = "net";
     public static readonly string gameObjectTextName = "Text";
+
+    public static readonly List<string> itemIdThrowable = new List<string> {
+        "net"
+    };
 
     public static readonly char splitCharUnderscore = '_';
 

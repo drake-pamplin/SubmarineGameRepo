@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class PlayerInteractionManager : MonoBehaviour
 {
+    private PlayerAnimationController playerAnimationController;
     private PlayerEquipmentManager playerEquipmentManager;
     private PlayerRaycastManager playerRaycastManager;
+    private PlayerStateManager playerStateManager;
+
+    private float chargedTime = 0;
+    public bool IsTimeCharged() { return chargedTime > 0; }
+    private bool charging = false;
+    public bool IsPlayerCharging() { return charging; }
     
     // Start is called before the first frame update
     void Start()
     {
+        playerAnimationController = GetComponent<PlayerAnimationController>();
         playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
         playerRaycastManager = GetComponent<PlayerRaycastManager>();
+        playerStateManager = GetComponent<PlayerStateManager>();
     }
 
     // Update is called once per frame
@@ -23,6 +32,7 @@ public class PlayerInteractionManager : MonoBehaviour
         
         ProcessInteractionInput();
         ProcessScrollInput();
+        ProcessThrowInput();
     }
 
     private void ProcessInteractionInput() {
@@ -52,6 +62,52 @@ public class PlayerInteractionManager : MonoBehaviour
         }
 
         InterfaceManager.instance.HotBarScrollHighlight(scrollInput > 0);
-        GetComponent<PlayerEquipmentManager>().UpdateEquippedObject();
+        if (playerStateManager.IsMovementStateGrounded()) {
+            GetComponent<PlayerEquipmentManager>().UpdateEquippedObject();
+        }
+    }
+
+    private void ProcessThrowInput() {
+        if (playerAnimationController.IsPlayerEquipping()) {
+            charging = false;
+            return;
+        }
+        
+        if (!playerEquipmentManager.IsItemEquipped()) {
+            charging = false;
+            return;
+        }
+
+        Item item = playerEquipmentManager.GetEquippedItem()[0];
+        if (!ConstantsManager.itemIdThrowable.Contains(item.GetItemId())) {
+            charging = false;
+            return;
+        }
+        
+        if (InputManager.instance.GetLeftClickDown()) {
+            if (charging) {
+                chargedTime += Time.deltaTime;
+                return;
+            }
+            charging = true;
+            chargedTime = 0;
+            return;
+        }
+        
+        if (!charging) {
+            return;
+        }
+
+        charging = false;
+        float chargedPowerModifier = 0;
+        if (chargedTime >= GameManager.instance.GetPlayerThrowChargeTime()) {
+            chargedPowerModifier = 1;
+        } else {
+            chargedPowerModifier = chargedTime / GameManager.instance.GetPlayerThrowChargeTime();
+        }
+        float chargedPower = GameManager.instance.GetPlayerThrowMaxForce() * chargedPowerModifier;
+        playerStateManager.TriggerThrowFlag();
+
+        Debug.Log("Charged throw for " + chargedPower);
     }
 }
