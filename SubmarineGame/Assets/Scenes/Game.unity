@@ -593,13 +593,18 @@ MonoBehaviour:
   playerLookClamp: 80
   playerLookSensitivityHorizontal: 0.25
   playerLookSensitivityVertical: 0.25
+  playerPullSpeed: 10
+  playerToolRetrievalRange: 1
+  playerRopeWidth: 0.1
   playerSprintSpeed: 10
   playerThrowChargeTime: 1
-  playerThrowMaxForce: 100
+  playerThrowMaxForce: 200
+  playerThrowSpeedSlowdown: 0.1
   playerWalkSpeed: 5
   raycastInteractDistance: 3
   raycastOriginHeight: 1.5
   worldGravityValue: 1
+  worldNetLineOffset: 0.15
   worldWaterIntertiaValue: 0.3
   worldWaterLine: 0
 --- !u!4 &480108830
@@ -1263,6 +1268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d03609e3e674e44f8d71fb72df626a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  throwState: 0
 --- !u!114 &1206596471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2571,6 +2577,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 127512097}
     m_Modifications:
+    - target: {fileID: 1392277449064055456, guid: 95ac2a04060063f43b52288a42401fa3, type: 3}
+      propertyPath: m_TagString
+      value: PlayerRopeMount
+      objectReference: {fileID: 0}
     - target: {fileID: 4383757307239966404, guid: 95ac2a04060063f43b52288a42401fa3, type: 3}
       propertyPath: m_RootOrder
       value: -1

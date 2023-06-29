@@ -38,10 +38,14 @@ public class ConstantsManager : MonoBehaviour
     public static readonly string gameObjectItemName = "Item";
     public static readonly string gameObjectItemPromptObjectName = "ItemPromptObject";
     public static readonly string gameObjectNetObjectName = "net";
+    public static readonly string gameObjectRopeAnchor = "RopeAnchor";
+    public static readonly string gameObjectRopeCoilObjectName = "RopeCoilObject";
+    public static readonly string gameObjectRopeObjectName = "RopeObject";
     public static readonly string gameObjectTextName = "Text";
 
+    public static readonly string itemIdNet = "net";
     public static readonly List<string> itemIdThrowable = new List<string> {
-        "net"
+        itemIdNet
     };
 
     public static readonly char splitCharUnderscore = '_';
@@ -50,7 +54,9 @@ public class ConstantsManager : MonoBehaviour
     public static readonly string tagHotBar = "HotBar";
     public static readonly string tagItem = "Item";
     public static readonly string tagItemReference = "ItemReference";
+    public static readonly string tagLeftHandMount = "LeftHandMount";
     public static readonly string tagPlayer = "Player";
+    public static readonly string tagRightHandMount = "RightHandMount";
 
     public static readonly string textPickUpBase = "Press E to pick up";
 }

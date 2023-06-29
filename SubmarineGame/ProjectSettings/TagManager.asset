@@ -8,6 +8,7 @@ TagManager:
   - Item
   - ItemReference
   - HotBar
+  - PlayerRopeMount
   layers:
   - Default
   - TransparentFX

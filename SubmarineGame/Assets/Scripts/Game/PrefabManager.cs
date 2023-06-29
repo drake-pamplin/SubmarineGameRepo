@@ -12,6 +12,8 @@ public class PrefabManager : MonoBehaviour
     public GameObject GetPrefabItem() { return prefabLibrary[ConstantsManager.gameObjectItemName]; }
     public GameObject GetPrefabNetObject() { return prefabLibrary[ConstantsManager.gameObjectNetObjectName]; }
     public GameObject GetPrefabPickUpText() { return prefabLibrary[ConstantsManager.gameObjectItemPromptObjectName]; }
+    public GameObject GetPrefabRopeCoilObject() { return prefabLibrary[ConstantsManager.gameObjectRopeCoilObjectName]; }
+    public GameObject GetPrefabRopeObject() { return prefabLibrary[ConstantsManager.gameObjectRopeObjectName]; }
 
     void Awake() {
         instance = this;
@@ -46,5 +48,11 @@ public class PrefabManager : MonoBehaviour
 
         fileName = ConstantsManager.filePrefabValue + ConstantsManager.fileToolsValue + ConstantsManager.gameObjectNetObjectName;
         prefabLibrary.Add(ConstantsManager.gameObjectNetObjectName ,Resources.Load<GameObject>(fileName));
+
+        fileName = ConstantsManager.filePrefabValue + ConstantsManager.fileWorldValue + ConstantsManager.gameObjectRopeCoilObjectName;
+        prefabLibrary.Add(ConstantsManager.gameObjectRopeCoilObjectName ,Resources.Load<GameObject>(fileName));
+        
+        fileName = ConstantsManager.filePrefabValue + ConstantsManager.fileWorldValue + ConstantsManager.gameObjectRopeObjectName;
+        prefabLibrary.Add(ConstantsManager.gameObjectRopeObjectName ,Resources.Load<GameObject>(fileName));
     }
 }

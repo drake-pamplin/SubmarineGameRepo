@@ -31,12 +31,20 @@ public class GameManager : MonoBehaviour
     public float GetPlayerLookSensitivityHorizontal() { return playerLookSensitivityHorizontal; }
     public float playerLookSensitivityVertical;
     public float GetPlayerLookSensitivityVertical() { return playerLookSensitivityVertical; }
+    public float playerPullSpeed;
+    public float GetPlayerPullSpeed() { return playerPullSpeed; }
+    public float playerToolRetrievalRange;
+    public float GetPlayerToolRetrievalRange() { return playerToolRetrievalRange; }
+    public float playerRopeWidth;
+    public float GetPlayerRopeWidth() { return playerRopeWidth; }
     public float playerSprintSpeed;
     public float GetPlayerSprintSpeed() { return playerSprintSpeed; }
     public float playerThrowChargeTime;
     public float GetPlayerThrowChargeTime() { return playerThrowChargeTime; }
     public float playerThrowMaxForce;
     public float GetPlayerThrowMaxForce() { return playerThrowMaxForce; }
+    public float playerThrowSpeedSlowdown;
+    public float GetPlayerThrowSpeedSlowdown() { return playerThrowSpeedSlowdown; }
     public float playerWalkSpeed;
     public float GetPlayerWalkSpeed() { return playerWalkSpeed; }
 
@@ -60,6 +68,8 @@ public class GameManager : MonoBehaviour
     [Header ("World Variables")]
     public float worldGravityValue;
     public float GetWorldGravityValue() { return worldGravityValue; }
+    public float worldNetLineOffset;
+    public float GetWorldNetLine() { return worldWaterLine + worldNetLineOffset; }
     public float worldWaterIntertiaValue;
     public float GetWorldWaterIntertiaValue() { return worldWaterIntertiaValue; }
     public float worldWaterLine;

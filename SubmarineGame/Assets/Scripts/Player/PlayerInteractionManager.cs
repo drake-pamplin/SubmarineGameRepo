@@ -6,6 +6,7 @@ public class PlayerInteractionManager : MonoBehaviour
 {
     private PlayerAnimationController playerAnimationController;
     private PlayerEquipmentManager playerEquipmentManager;
+    private PlayerMovementManager playerMovementManager;
     private PlayerRaycastManager playerRaycastManager;
     private PlayerStateManager playerStateManager;
 
@@ -13,12 +14,18 @@ public class PlayerInteractionManager : MonoBehaviour
     public bool IsTimeCharged() { return chargedTime > 0; }
     private bool charging = false;
     public bool IsPlayerCharging() { return charging; }
+
+    private Vector3 thrownObjectMotionVector = Vector3.zero;
+    private Vector3 thrownObjectPullVector = Vector3.zero;
+    private GameObject thrownDisplayObject = null;
+    private GameObject thrownRopeObject = null;
     
     // Start is called before the first frame update
     void Start()
     {
         playerAnimationController = GetComponent<PlayerAnimationController>();
         playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
+        playerMovementManager = GetComponent<PlayerMovementManager>();
         playerRaycastManager = GetComponent<PlayerRaycastManager>();
         playerStateManager = GetComponent<PlayerStateManager>();
     }
@@ -34,6 +41,30 @@ public class PlayerInteractionManager : MonoBehaviour
         ProcessPullInput();
         ProcessScrollInput();
         ProcessThrowInput();
+        ProcessThrownObjectMotion();
+    }
+
+    public void DestroyDisplayObjects() {
+        if (thrownRopeObject != null) {
+            Destroy(thrownRopeObject);
+            thrownRopeObject = null;
+        }
+        if (thrownDisplayObject != null) {
+            Destroy(thrownDisplayObject);
+            thrownDisplayObject = null;
+        }
+    }
+
+    private bool IsToolRetrievable() {
+        Vector3 toolPos = thrownDisplayObject.transform.position;
+        toolPos.y = 0;
+        Vector3 playerPos = transform.position;
+        playerPos.y = 0;
+        float toolDistance = Vector3.Distance(toolPos, playerPos);
+        if (toolDistance < GameManager.instance.GetPlayerToolRetrievalRange()) {
+            return true;
+        }
+        return false;
     }
 
     private void ProcessInteractionInput() {
@@ -56,15 +87,28 @@ public class PlayerInteractionManager : MonoBehaviour
     }
 
     private void ProcessPullInput() {
+        thrownObjectPullVector = Vector3.zero;
+
         if (!playerStateManager.IsThrowStateThrown()) {
             return;
         }
 
-        if (!InputManager.instance.GetRightClick()) {
+        if (!InputManager.instance.GetRightClickDown()) {
             return;
         }
 
-        playerStateManager.TriggerHeldState();
+        if (IsToolRetrievable()) {
+            DestroyDisplayObjects();
+            playerStateManager.TriggerHeldState();
+            return;
+        }
+
+        float toolHeight = thrownDisplayObject.transform.position.y;
+        Vector3 playerPosition = transform.position;
+        playerPosition.y = toolHeight;
+        thrownObjectPullVector = playerPosition - thrownDisplayObject.transform.position;
+        thrownObjectPullVector = thrownObjectPullVector.normalized;
+        thrownObjectPullVector *= GameManager.instance.GetPlayerPullSpeed();
     }
 
     private void ProcessScrollInput() {
@@ -127,8 +171,49 @@ public class PlayerInteractionManager : MonoBehaviour
             chargedPowerModifier = chargedTime / GameManager.instance.GetPlayerThrowChargeTime();
         }
         float chargedPower = GameManager.instance.GetPlayerThrowMaxForce() * chargedPowerModifier;
+        thrownObjectMotionVector = playerMovementManager.GetCameraObject().transform.forward * chargedPower;
+        
         playerStateManager.TriggerThrowFlag();
 
         Debug.Log("Charged throw for " + chargedPower);
+    }
+
+    private void ProcessThrownObjectMotion() {
+        if (!playerStateManager.IsThrowStateThrown()) {
+            return;
+        }
+
+        if (thrownDisplayObject == null) {
+            GameObject prefab = playerAnimationController.GetDisplayPrefab(playerEquipmentManager.GetEquippedItem()[0].GetItemId());
+            thrownDisplayObject = Instantiate(
+                prefab,
+                new Vector3(transform.position.x, GameManager.instance.GetRaycastOriginHeight(), transform.position.z),
+                Quaternion.identity
+            );
+        }
+
+        if (thrownRopeObject == null) {
+            GameObject ropePrefab = PrefabManager.instance.GetPrefabRopeObject();
+            thrownRopeObject = Instantiate(
+                ropePrefab,
+                Vector3.zero,
+                Quaternion.identity
+            );
+            Rope rope = thrownRopeObject.GetComponent<Rope>();
+            rope.SetAnchorOne(thrownDisplayObject.transform.Find(ConstantsManager.gameObjectRopeAnchor).gameObject);
+            rope.SetAnchorTwo(GameObject.FindGameObjectWithTag(ConstantsManager.tagRightHandMount));
+        }
+
+        Vector3 motionVector = Vector3.zero;
+        if (thrownDisplayObject.transform.position.y <= GameManager.instance.GetWorldNetLine()) {
+            thrownObjectMotionVector = Vector3.zero;
+        }
+        if (thrownDisplayObject.transform.position.y > GameManager.instance.GetWorldNetLine()) {
+            motionVector = thrownObjectMotionVector * (Time.deltaTime * GameManager.instance.GetPlayerThrowSpeedSlowdown());
+        } else {
+            motionVector = thrownObjectPullVector * Time.deltaTime;
+        }
+        thrownDisplayObject.transform.Translate(motionVector);
+        thrownObjectMotionVector.y -= GameManager.instance.GetWorldGravityValue();
     }
 }

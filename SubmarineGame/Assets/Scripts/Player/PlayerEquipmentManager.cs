@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerEquipmentManager : MonoBehaviour
 {
     private PlayerAnimationController playerAnimationController;
+    private PlayerInteractionManager playerInteractionManager;
     private PlayerMovementManager playerMovementManager;
     private PlayerStateManager playerStateManager;
     
@@ -43,6 +44,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     void Start()
     {
         playerAnimationController = GetComponent<PlayerAnimationController>();
+        playerInteractionManager = GetComponent<PlayerInteractionManager>();
         playerMovementManager = GetComponent<PlayerMovementManager>();
         playerStateManager = GetComponent<PlayerStateManager>();
     }
@@ -132,6 +134,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         }
 
         UnequipItem();
+        playerInteractionManager.DestroyDisplayObjects();
         playerStateManager.TriggerHeldState();
     }
 

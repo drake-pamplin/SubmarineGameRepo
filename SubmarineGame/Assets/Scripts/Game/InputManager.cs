@@ -121,6 +121,10 @@ public class InputManager : MonoBehaviour
         return Mouse.current.rightButton.wasPressedThisFrame;
     }
 
+    public bool GetRightClickDown() {
+        return Mouse.current.rightButton.isPressed;
+    }
+
     public float GetScrollValue() {
         float inputValue = 0;
 

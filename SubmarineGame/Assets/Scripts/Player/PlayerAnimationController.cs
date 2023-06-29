@@ -29,6 +29,16 @@ public class PlayerAnimationController : MonoBehaviour
         ProcessThrownObjectState();
     }
 
+    public GameObject GetDisplayPrefab(string itemCode) {
+        GameObject prefab = null;
+
+        if (ConstantsManager.itemIdNet.Equals(itemCode)) {
+            prefab = PrefabManager.instance.GetPrefabNetObject();
+        }
+
+        return prefab;
+    }
+
     private string GetItemAnimationName(string baseName) {
         string animationName = "";
 
@@ -52,7 +62,7 @@ public class PlayerAnimationController : MonoBehaviour
 
             
             displayObject = Instantiate(
-                PrefabManager.instance.GetPrefabNetObject(),
+                GetDisplayPrefab(itemId),
                 GameObject.FindGameObjectWithTag(ConstantsManager.tagItemReference).transform
             );
         }
@@ -155,14 +165,36 @@ public class PlayerAnimationController : MonoBehaviour
 
         if (playerStateManager.IsThrowStateThrown()) {
             if (displayObject != null) {
-                Destroy(displayObject);
+                if (!ConstantsManager.gameObjectRopeCoilObjectName.Equals(displayObject.name)) {
+                    Destroy(displayObject);
+                }
             }
-        } else {
             if (displayObject == null) {
                 displayObject = Instantiate(
-                    PrefabManager.instance.GetPrefabNetObject(),
+                    PrefabManager.instance.GetPrefabRopeCoilObject(),
+                    GameObject.FindGameObjectWithTag(ConstantsManager.tagLeftHandMount).transform
+                );
+                displayObject.name = ConstantsManager.gameObjectRopeCoilObjectName;
+                displayObject.transform.Find(ConstantsManager.gameObjectRopeObjectName).GetComponent<Rope>().SetAnchorOne(
+                    GameObject.FindGameObjectWithTag(ConstantsManager.tagLeftHandMount).gameObject
+                );
+                displayObject.transform.Find(ConstantsManager.gameObjectRopeObjectName).GetComponent<Rope>().SetAnchorTwo(
+                    GameObject.FindGameObjectWithTag(ConstantsManager.tagRightHandMount).gameObject
+                );
+            }
+        } else {
+            GameObject prefab = GetDisplayPrefab(playerEquipmentManager.GetEquippedItem()[0].GetItemId());
+            if (displayObject != null) {
+                if (!prefab.name.Equals(displayObject.name)) {
+                    Destroy(displayObject);
+                }
+            }
+            if (displayObject == null) {
+                displayObject = Instantiate(
+                    prefab,
                     GameObject.FindGameObjectWithTag(ConstantsManager.tagItemReference).transform
                 );
+                displayObject.name = prefab.name;
             }
         }
     }
