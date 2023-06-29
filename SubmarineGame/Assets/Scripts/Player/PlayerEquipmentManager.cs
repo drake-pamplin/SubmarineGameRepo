@@ -132,6 +132,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         }
 
         UnequipItem();
+        playerStateManager.TriggerHeldState();
     }
 
     public void UpdateEquippedObject() {

@@ -31,6 +31,7 @@ public class PlayerInteractionManager : MonoBehaviour
         }
         
         ProcessInteractionInput();
+        ProcessPullInput();
         ProcessScrollInput();
         ProcessThrowInput();
     }
@@ -54,7 +55,23 @@ public class PlayerInteractionManager : MonoBehaviour
         Destroy(interactableObject);
     }
 
+    private void ProcessPullInput() {
+        if (!playerStateManager.IsThrowStateThrown()) {
+            return;
+        }
+
+        if (!InputManager.instance.GetRightClick()) {
+            return;
+        }
+
+        playerStateManager.TriggerHeldState();
+    }
+
     private void ProcessScrollInput() {
+        if (playerStateManager.IsThrowStateThrown()) {
+            return;
+        }
+        
         float scrollInput = InputManager.instance.GetScrollValue();
 
         if (scrollInput == 0) {
@@ -81,6 +98,10 @@ public class PlayerInteractionManager : MonoBehaviour
         Item item = playerEquipmentManager.GetEquippedItem()[0];
         if (!ConstantsManager.itemIdThrowable.Contains(item.GetItemId())) {
             charging = false;
+            return;
+        }
+
+        if (playerStateManager.IsThrowStateThrown()) {
             return;
         }
         

@@ -117,6 +117,10 @@ public class InputManager : MonoBehaviour
         return inputValue;
     }
 
+    public bool GetRightClick() {
+        return Mouse.current.rightButton.wasPressedThisFrame;
+    }
+
     public float GetScrollValue() {
         float inputValue = 0;
 

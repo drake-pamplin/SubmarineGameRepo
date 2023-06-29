@@ -37,6 +37,14 @@ public class PlayerStateManager : MonoBehaviour
 
     private bool throwFlag = false;
     public void TriggerThrowFlag() { throwFlag = true; }
+
+    public enum ThrowState {
+        held,
+        thrown
+    }
+    public ThrowState throwState = ThrowState.held;
+    public bool IsThrowStateThrown() { return throwState == ThrowState.thrown; }
+    public void TriggerHeldState() { throwState = ThrowState.held; }
     
     // Start is called before the first frame update
     void Start()
@@ -83,6 +91,7 @@ public class PlayerStateManager : MonoBehaviour
             if (throwFlag) {
                 playerState = PlayerState.throwing;
                 throwFlag = false;
+                throwState = ThrowState.thrown;
                 return;
             }
             if (playerMovementManager.IsPlayerSprinting()) {

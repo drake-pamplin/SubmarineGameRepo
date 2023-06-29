@@ -26,6 +26,7 @@ public class PlayerAnimationController : MonoBehaviour
     void Update()
     {
         ProcessAnimationState();
+        ProcessThrownObjectState();
     }
 
     private string GetItemAnimationName(string baseName) {
@@ -138,6 +139,30 @@ public class PlayerAnimationController : MonoBehaviour
             animationName = GetItemAnimationName(ConstantsManager.animationWalkBase);
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName)) {
                 animator.Play(animationName);
+            }
+        }
+    }
+
+    private void ProcessThrownObjectState() {
+        if (!playerEquipmentManager.IsItemEquipped()) {
+            return;
+        }
+
+        Item item = playerEquipmentManager.GetEquippedItem()[0];
+        if (!ConstantsManager.itemIdThrowable.Contains(item.GetItemId())) {
+            return;
+        }
+
+        if (playerStateManager.IsThrowStateThrown()) {
+            if (displayObject != null) {
+                Destroy(displayObject);
+            }
+        } else {
+            if (displayObject == null) {
+                displayObject = Instantiate(
+                    PrefabManager.instance.GetPrefabNetObject(),
+                    GameObject.FindGameObjectWithTag(ConstantsManager.tagItemReference).transform
+                );
             }
         }
     }
