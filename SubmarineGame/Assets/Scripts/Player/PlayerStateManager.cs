@@ -20,6 +20,7 @@ public class PlayerStateManager : MonoBehaviour
         charging,
         freestyleStroke,
         idle,
+        pulling,
         sprint,
         throwing,
         tread,
@@ -30,6 +31,7 @@ public class PlayerStateManager : MonoBehaviour
     public bool IsPlayerChargingState() { return playerState == PlayerState.charging; }
     public bool IsPlayerFreestyleStrokeState() { return playerState == PlayerState.freestyleStroke; }
     public bool IsPlayerIdleState() { return playerState == PlayerState.idle; }
+    public bool IsPlayerPullingState() { return playerState == PlayerState.pulling; }
     public bool IsPlayerSprintState() { return playerState == PlayerState.sprint; }
     public bool IsPlayerThrowingState() { return playerState == PlayerState.throwing; }
     public bool IsPlayerTreadState() { return playerState == PlayerState.tread; }
@@ -79,6 +81,7 @@ public class PlayerStateManager : MonoBehaviour
         Priority:
         - Charging
         - Throwing
+        - Pulling
         - Sprint
         - Walk
         - Idle
@@ -92,6 +95,10 @@ public class PlayerStateManager : MonoBehaviour
                 playerState = PlayerState.throwing;
                 throwFlag = false;
                 throwState = ThrowState.thrown;
+                return;
+            }
+            if (playerInteractionManager.IsPlayerPulling()) {
+                playerState = PlayerState.pulling;
                 return;
             }
             if (playerMovementManager.IsPlayerSprinting()) {

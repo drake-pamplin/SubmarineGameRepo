@@ -78,6 +78,14 @@ public class PlayerAnimationController : MonoBehaviour
         }
         return false;
     }
+
+    public bool IsPlayerPulling() {
+        string equipStateName = GetItemAnimationName(ConstantsManager.animationPullBase);
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(equipStateName)) {
+            return true;
+        }
+        return false;
+    }
     
     public bool IsPlayerThrowing() {
         string throwStateName = GetItemAnimationName(ConstantsManager.animationThrowBase);
@@ -101,6 +109,9 @@ public class PlayerAnimationController : MonoBehaviour
         if (IsPlayerEquipping()) {
             return;
         }
+        // if (IsPlayerPulling()) {
+        //     return;
+        // }
         if (IsPlayerThrowing()) {
             return;
         }
@@ -127,6 +138,12 @@ public class PlayerAnimationController : MonoBehaviour
                 animator.Play(animationName);
             }
         }
+        if (playerStateManager.IsPlayerPullingState()) {
+            animationName = GetItemAnimationName(ConstantsManager.animationPullBase);
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName)) {
+                animator.Play(animationName);
+            }
+        }
         if (playerStateManager.IsPlayerSprintState()) {
             animationName = GetItemAnimationName(ConstantsManager.animationRunBase);
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName)) {
@@ -136,7 +153,6 @@ public class PlayerAnimationController : MonoBehaviour
         if (playerStateManager.IsPlayerThrowingState()) {
             animationName = GetItemAnimationName(ConstantsManager.animationThrowBase);
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName)) {
-                Debug.Log("Throwing");
                 animator.Play(animationName);
             }
         }

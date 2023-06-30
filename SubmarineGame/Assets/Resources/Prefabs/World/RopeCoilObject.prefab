@@ -95,7 +95,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 37a63df22a40ef64f9137a78eb8a8a44, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -151,6 +151,38 @@ PrefabInstance:
     - target: {fileID: 2425221617179006798, guid: a0bc9fd3bb954b545a38ff1de21bb67c, type: 3}
       propertyPath: m_Name
       value: RopeObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236662097274710447, guid: a0bc9fd3bb954b545a38ff1de21bb67c, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.b
+      value: 0.13725491
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236662097274710447, guid: a0bc9fd3bb954b545a38ff1de21bb67c, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.g
+      value: 0.39607847
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236662097274710447, guid: a0bc9fd3bb954b545a38ff1de21bb67c, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.r
+      value: 0.77647066
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236662097274710447, guid: a0bc9fd3bb954b545a38ff1de21bb67c, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.b
+      value: 0.13333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236662097274710447, guid: a0bc9fd3bb954b545a38ff1de21bb67c, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.g
+      value: 0.3921569
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236662097274710447, guid: a0bc9fd3bb954b545a38ff1de21bb67c, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.r
+      value: 0.7725491
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236662097274710447, guid: a0bc9fd3bb954b545a38ff1de21bb67c, type: 3}
+      propertyPath: m_Parameters.colorGradient.m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236662097274710447, guid: a0bc9fd3bb954b545a38ff1de21bb67c, type: 3}
+      propertyPath: m_Parameters.colorGradient.m_ColorSpace
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8232329411894037043, guid: a0bc9fd3bb954b545a38ff1de21bb67c, type: 3}
       propertyPath: m_RootOrder

@@ -102,6 +102,8 @@ public class PlayerEquipmentManager : MonoBehaviour
 
         Item itemToDrop = equippedObject[0];
         UnequipItem();
+        playerInteractionManager.DestroyDisplayObjects();
+        playerStateManager.TriggerHeldState();
         RemoveItemFromInventoryHotBar(InterfaceManager.instance.GetHotBarIndex());
 
         GameObject itemDrop = Instantiate(

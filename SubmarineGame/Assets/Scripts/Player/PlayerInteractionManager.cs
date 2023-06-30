@@ -55,6 +55,10 @@ public class PlayerInteractionManager : MonoBehaviour
         }
     }
 
+    public bool IsPlayerPulling() {
+        return thrownObjectPullVector != Vector3.zero;
+    }
+
     private bool IsToolRetrievable() {
         Vector3 toolPos = thrownDisplayObject.transform.position;
         toolPos.y = 0;
