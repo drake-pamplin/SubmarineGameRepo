@@ -7,6 +7,8 @@ public class PrefabManager : MonoBehaviour
     public static PrefabManager instance;
 
     private Dictionary<string, GameObject> prefabLibrary = new Dictionary<string, GameObject>();
+    public GameObject GetPrefabBubblesObject() { return prefabLibrary[ConstantsManager.gameObjectBubblesObjectName]; }
+    public GameObject GetPrefabDebrisItem() { return prefabLibrary[ConstantsManager.gameObjectDebrisObjectName]; }
     public GameObject GetPrefabInventoryScreenObject() { return prefabLibrary[ConstantsManager.gameObjectInventoryScreenObjectName]; }
     public GameObject GetPrefabInventoryItemTile() { return prefabLibrary[ConstantsManager.gameObjectInventoryItemTileName]; }
     public GameObject GetPrefabItem() { return prefabLibrary[ConstantsManager.gameObjectItemName]; }
@@ -34,6 +36,12 @@ public class PrefabManager : MonoBehaviour
     private void LoadPrefabs() {
         string fileName = "";
 
+        fileName = ConstantsManager.filePrefabValue + ConstantsManager.fileWorldValue + ConstantsManager.gameObjectBubblesObjectName;
+        prefabLibrary.Add(ConstantsManager.gameObjectBubblesObjectName ,Resources.Load<GameObject>(fileName));
+        
+        fileName = ConstantsManager.filePrefabValue + ConstantsManager.fileWorldValue + ConstantsManager.gameObjectDebrisObjectName;
+        prefabLibrary.Add(ConstantsManager.gameObjectDebrisObjectName ,Resources.Load<GameObject>(fileName));
+        
         fileName = ConstantsManager.filePrefabValue + ConstantsManager.fileInterfaceValue + ConstantsManager.gameObjectInventoryItemTileName;
         prefabLibrary.Add(ConstantsManager.gameObjectInventoryItemTileName ,Resources.Load<GameObject>(fileName));
 

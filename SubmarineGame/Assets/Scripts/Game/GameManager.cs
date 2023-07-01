@@ -6,6 +6,24 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    [Header ("Debris Variables")]
+    public float debrisBobbingDuration;
+    public float GetDebrisBobbingDuration() { return debrisBobbingDuration; }
+    public float debrisMaxSpawns;
+    public float GetDebrisMaxSpawns() { return debrisMaxSpawns; }
+    public float debrisMaxSpawnRange;
+    public float GetDebrisMaxSpawnRange() { return debrisMaxSpawnRange; }
+    public float debrisSinkDuration;
+    public float GetDebrisSinkDuration() { return debrisSinkDuration; }
+    public float debrisSpawnTimerMaximum;
+    public float GetDebrisSpawnTimerMaximum() { return debrisSpawnTimerMaximum; }
+    public float debrisSpawnTimerMinimum;
+    public float GetDebrisSpawnTimerMinimum() { return debrisSpawnTimerMinimum; }
+    public float debrisSurfaceDuration;
+    public float GetDebrisSurfaceDuration() { return debrisSurfaceDuration; }
+    public float debrisTransitionTime;
+    public float GetDebrisTransitionTime() { return debrisTransitionTime; }
+    
     [Header ("Interface Variables")]
     public int interfaceInventoryDisplayHeight;
     public int GetInterfaceInventoryDisplayHeight() { return interfaceInventoryDisplayHeight; }

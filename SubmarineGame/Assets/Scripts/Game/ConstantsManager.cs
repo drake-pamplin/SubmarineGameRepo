@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ConstantsManager : MonoBehaviour
 {
+    public static readonly string animationBobName = "Bob";
     public static readonly string animationBreastStrokeName = "BreastStroke";
     public static readonly string animationChargeBase = "Charge";
     public static readonly string animationDefaultName = "Default";
@@ -15,6 +16,8 @@ public class ConstantsManager : MonoBehaviour
     public static readonly string animationPullBase = "Pull";
     public static readonly string animationRunBase = "Run";
     public static readonly string animationRunName = "Run";
+    public static readonly string animationSinkName = "Sink";
+    public static readonly string animationSurfaceName = "Surface";
     public static readonly string animationThrowBase = "Throw";
     public static readonly string animationTreadName = "Tread";
     public static readonly string animationWalkBase = "Walk";
@@ -27,7 +30,10 @@ public class ConstantsManager : MonoBehaviour
     
     public static readonly string gameObjectAnimationName = "Animation";
     public static readonly string gameObjectBackgroundName = "Background";
+    public static readonly string gameObjectBubblesObjectName = "BubblesObject";
     public static readonly string gameObjectCameraName = "Camera";
+    public static readonly string gameObjectDebrisItemName = "DebrisItem";
+    public static readonly string gameObjectDebrisObjectName = "DebrisObject";
     public static readonly string gameObjectDisplaySpaceName = "DisplaySpace";
     public static readonly string gameObjectHighlightContainerName = "HighlightContainer";
     public static readonly string gameObjectHighlightName = "Highlight";
@@ -52,12 +58,14 @@ public class ConstantsManager : MonoBehaviour
     public static readonly char splitCharUnderscore = '_';
 
     public static readonly string tagCanvas = "Canvas";
+    public static readonly string tagDebris = "Debris";
     public static readonly string tagHotBar = "HotBar";
     public static readonly string tagItem = "Item";
     public static readonly string tagItemReference = "ItemReference";
     public static readonly string tagLeftHandMount = "LeftHandMount";
     public static readonly string tagPlayer = "Player";
     public static readonly string tagRightHandMount = "RightHandMount";
+    public static readonly string tagWater = "Water";
 
     public static readonly string textPickUpBase = "Press E to pick up";
 }
