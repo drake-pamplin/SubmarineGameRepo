@@ -61,7 +61,6 @@ public class PlayerMovementManager : MonoBehaviour
     private void HandleGroundedMoveInput() {
         bool isGrounded = referenceCharacterController.isGrounded;
 
-        movementVector = transform.TransformDirection(movementVector);
         movementVector = movementVector.normalized;
         float moveSpeed = IsPlayerSprinting() ? GameManager.instance.GetPlayerSprintSpeed() : GameManager.instance.GetPlayerWalkSpeed();
         referenceCharacterController.Move(movementVector * moveSpeed * Time.deltaTime);
@@ -103,7 +102,6 @@ public class PlayerMovementManager : MonoBehaviour
     }
 
     private void HandleWaterMoveInput() {
-        movementVector = GetCameraObject().transform.TransformDirection(movementVector);
         Vector3 verticalSwimVector = new Vector3(0, verticalSwimInput, 0);
         movementVector += verticalSwimVector;
         movementVector = movementVector.normalized;
@@ -162,7 +160,8 @@ public class PlayerMovementManager : MonoBehaviour
         movementForwardInput += InputManager.instance.GetForwardInput();
         movementHorizontalInput += InputManager.instance.GetHorizontalInput();
 
-        movementVector = new Vector3(movementHorizontalInput, 0, movementForwardInput);
+        Transform referenceObject = playerStateManager.IsMovementStateWater() ? GetCameraObject().transform : transform;
+        movementVector = referenceObject.forward * movementForwardInput + transform.right * movementHorizontalInput;
 
         verticalSwimInput = InputManager.instance.GetSwimVerticalInput();
     }

@@ -88,6 +88,12 @@ public class GameManager : MonoBehaviour
     public float GetWorldGravityValue() { return worldGravityValue; }
     public float worldNetLineOffset;
     public float GetWorldNetLine() { return worldWaterLine + worldNetLineOffset; }
+    public float worldNetRaycastCount;
+    public float GetWorldNetRaycastCount() { return worldNetRaycastCount; }
+    public float worldNetRaycastDistance;
+    public float GetWorldNetRaycastDistance() { return worldNetRaycastDistance; }
+    public float worldNetRaycastTick;
+    public float GetWorldNetRaycastTick() { return worldNetRaycastTick; }
     public float worldWaterIntertiaValue;
     public float GetWorldWaterIntertiaValue() { return worldWaterIntertiaValue; }
     public float worldWaterLine;
