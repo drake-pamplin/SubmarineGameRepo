@@ -6,6 +6,7 @@ public class Debris : MonoBehaviour
 {
     private enum DebrisState {
         bobbing,
+        caught,
         sinking,
         surfacing
     }
@@ -29,6 +30,10 @@ public class Debris : MonoBehaviour
             return;
         }
 
+        if (debrisState == DebrisState.caught) {
+            return;
+        }
+
         if (spawnTime >= targetTime) {
             if (debrisState == DebrisState.surfacing) {
                 transform.Find(ConstantsManager.gameObjectDebrisItemName).gameObject.GetComponent<Animator>().Play(ConstantsManager.animationBobName);
@@ -49,5 +54,16 @@ public class Debris : MonoBehaviour
         }
 
         spawnTime += Time.deltaTime;
+    }
+
+    public void CatchDebris() {
+        debrisState = DebrisState.caught;
+    }
+
+    public void ReleaseDebris() {
+        transform.Find(ConstantsManager.gameObjectDebrisItemName).gameObject.GetComponent<Animator>().Play(ConstantsManager.animationBobName);
+        debrisState = DebrisState.bobbing;
+        targetTime = Time.time + GameManager.instance.GetDebrisBobbingDuration();
+        spawnTime = Time.time;
     }
 }

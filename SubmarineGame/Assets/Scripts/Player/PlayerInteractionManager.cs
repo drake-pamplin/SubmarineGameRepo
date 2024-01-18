@@ -50,6 +50,8 @@ public class PlayerInteractionManager : MonoBehaviour
             thrownRopeObject = null;
         }
         if (thrownDisplayObject != null) {
+            thrownDisplayObject.GetComponent<Net>().ReleaseCaughtDebris();
+
             Destroy(thrownDisplayObject);
             thrownDisplayObject = null;
         }
@@ -102,6 +104,7 @@ public class PlayerInteractionManager : MonoBehaviour
         }
 
         if (IsToolRetrievable()) {
+            thrownDisplayObject.GetComponent<Net>().DestroyCaughtDebris();
             DestroyDisplayObjects();
             playerStateManager.TriggerHeldState();
             return;

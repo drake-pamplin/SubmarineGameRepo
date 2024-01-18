@@ -17,14 +17,23 @@ public class PrefabManager : MonoBehaviour
     public GameObject GetPrefabRopeCoilObject() { return prefabLibrary[ConstantsManager.gameObjectRopeCoilObjectName]; }
     public GameObject GetPrefabRopeObject() { return prefabLibrary[ConstantsManager.gameObjectRopeObjectName]; }
 
+    private Dictionary<string, Sprite> textureLibrary = new Dictionary<string, Sprite>();
+    public Sprite GetTextureById(string itemId) {
+        Sprite texture = null;
+        textureLibrary.TryGetValue(itemId, out texture);
+        return texture;
+    }
+
     void Awake() {
         instance = this;
+        LoadPrefabs();
+        LoadTextures();
     }
     
     // Start is called before the first frame update
     void Start()
     {
-        LoadPrefabs();
+        
     }
 
     // Update is called once per frame
@@ -62,5 +71,19 @@ public class PrefabManager : MonoBehaviour
         
         fileName = ConstantsManager.filePrefabValue + ConstantsManager.fileWorldValue + ConstantsManager.gameObjectRopeObjectName;
         prefabLibrary.Add(ConstantsManager.gameObjectRopeObjectName ,Resources.Load<GameObject>(fileName));
+    }
+
+    private void LoadTextures() {
+        string fileName = "";
+        string textureName = "";
+
+        // Item textures.
+        textureName = ConstantsManager.itemIdNet;
+        fileName = ConstantsManager.fileItemTexturesValue + textureName;
+        textureLibrary.Add(textureName, Resources.Load<Sprite>(fileName));
+
+        textureName = ConstantsManager.itemIdWood;
+        fileName = ConstantsManager.fileItemTexturesValue + textureName;
+        textureLibrary.Add(textureName, Resources.Load<Sprite>(fileName));
     }
 }

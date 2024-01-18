@@ -7,6 +7,7 @@ public class Net : MonoBehaviour
     private PlayerStateManager playerStateManager;
 
     private float tickTimer = 0;
+    private List<GameObject> caughtDebris = new List<GameObject>();
     
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,8 @@ public class Net : MonoBehaviour
         } else {
             tickTimer += Time.deltaTime;
         }
+
+        HandleCaughtDebrisTracking();
     }
 
     private void CheckForDebris() {
@@ -38,10 +41,45 @@ public class Net : MonoBehaviour
         for (int raycastIndex = 0; raycastIndex < GameManager.instance.GetWorldNetRaycastCount(); raycastIndex++) {
             Vector3 raycastDirection = Quaternion.Euler(0, raycastIndex * deltaAngle, 0) * transform.forward;
             Debug.DrawRay(transform.position, raycastDirection * GameManager.instance.GetWorldNetRaycastDistance(), Color.red);
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, raycastDirection, out hit, GameManager.instance.GetWorldNetRaycastDistance())) {
+                GameObject hitObject = hit.collider.gameObject;
+                if (hitObject.CompareTag(ConstantsManager.tagDebris) && !hits.Contains(hitObject)) {
+                    hits.Add(hitObject);
+                }
+            }
         }
 
-        // Check for hits.
-
         // Add hit debris to net.
+        foreach (GameObject hitObject in hits) {
+            hitObject.GetComponent<SphereCollider>().enabled = false;
+            hitObject.GetComponent<Debris>().CatchDebris();
+        }
+        caughtDebris.AddRange(hits);
+    }
+
+    public void DestroyCaughtDebris() {
+        foreach (GameObject caughtDebrisObject in caughtDebris) {
+            Destroy(caughtDebrisObject);
+        }
+        caughtDebris = new List<GameObject>();
+    }
+
+    private void HandleCaughtDebrisTracking() {
+        if (!playerStateManager.IsThrowStateThrown()) {
+            return;
+        }
+        
+        foreach (GameObject debrisObject in caughtDebris) {
+            debrisObject.transform.position = transform.position;
+        }
+    }
+
+    public void ReleaseCaughtDebris() {
+        foreach (GameObject caughtDebrisObject in caughtDebris) {
+            caughtDebrisObject.GetComponent<SphereCollider>().enabled = true;
+            caughtDebrisObject.GetComponent<Debris>().ReleaseDebris();
+        }
+        caughtDebris = new List<GameObject>();
     }
 }

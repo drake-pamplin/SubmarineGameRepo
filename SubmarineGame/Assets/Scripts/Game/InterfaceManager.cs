@@ -109,10 +109,12 @@ public class InterfaceManager : MonoBehaviour
             if (item.Length == 0) {
                 slotObject.GetComponent<Item>().CloneItemValues(new Item());
                 slotObject.transform.Find(ConstantsManager.gameObjectIconName).gameObject.GetComponent<Image>().sprite = null;
+                slotObject.transform.Find(ConstantsManager.gameObjectIconName).Find(ConstantsManager.gameObjectQuantityName).gameObject.GetComponent<Text>().text = "0";
                 continue;
             }
             slotObject.GetComponent<Item>().CloneItemValues(item[0]);
             slotObject.transform.Find(ConstantsManager.gameObjectIconName).gameObject.GetComponent<Image>().sprite = item[0].GetItemIcon();
+            slotObject.transform.Find(ConstantsManager.gameObjectIconName).Find(ConstantsManager.gameObjectQuantityName).gameObject.GetComponent<Text>().text = item[0].GetItemQuantity().ToString();
         }
     }
 

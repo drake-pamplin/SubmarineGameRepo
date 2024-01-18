@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class ConstantsManager : MonoBehaviour
 {
+    public static ConstantsManager instance;
+    void Awake() {
+        instance = this;
+    }
+    
     public static readonly string animationBobName = "Bob";
     public static readonly string animationBreastStrokeName = "BreastStroke";
     public static readonly string animationChargeBase = "Charge";
@@ -25,6 +30,7 @@ public class ConstantsManager : MonoBehaviour
 
     public static readonly string fileInterfaceValue = "Interface/";
     public static readonly string filePrefabValue = "Prefabs/";
+    public static readonly string fileItemTexturesValue = "Textures/Items/";
     public static readonly string fileToolsValue = "Tools/";
     public static readonly string fileWorldValue = "World/";
     
@@ -45,12 +51,24 @@ public class ConstantsManager : MonoBehaviour
     public static readonly string gameObjectItemName = "Item";
     public static readonly string gameObjectItemPromptObjectName = "ItemPromptObject";
     public static readonly string gameObjectNetObjectName = "net";
+    public static readonly string gameObjectQuantityName = "Quantity";
     public static readonly string gameObjectRopeAnchor = "RopeAnchor";
     public static readonly string gameObjectRopeCoilObjectName = "RopeCoilObject";
     public static readonly string gameObjectRopeObjectName = "RopeObject";
     public static readonly string gameObjectTextName = "Text";
 
+    private Dictionary<string, string> itemDisplayNameLibrary = new Dictionary<string, string>() {
+        { itemIdNet, "Net" },
+        { itemIdWood, "Wood" }
+    };
+    public string GetItemDisplayNameById(string itemId) {
+        string itemDisplayName = "";
+        itemDisplayNameLibrary.TryGetValue(itemId, out itemDisplayName);
+        return itemDisplayName;
+    }
+    
     public static readonly string itemIdNet = "net";
+    public static readonly string itemIdWood = "wood";
     public static readonly List<string> itemIdThrowable = new List<string> {
         itemIdNet
     };
