@@ -36,6 +36,11 @@ public class ItemManager : MonoBehaviour
         );
         itemLibrary.Add(itemId, newItem);
     }
+    public Item GetItemById(string itemId) {
+        Item item = new Item();
+        itemLibrary.TryGetValue(itemId, out item);
+        return item;
+    }
     
     // Start is called before the first frame update
     void Start()

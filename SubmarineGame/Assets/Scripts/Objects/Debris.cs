@@ -14,8 +14,10 @@ public class Debris : MonoBehaviour
     
     private float spawnTime = 0;
     public void SetSpawnTime(float time) { spawnTime = time; }
-
     private float targetTime;
+    private string itemId;
+    public string GetItemId() { return itemId; }
+    public void SetItemId(string itemId) { this.itemId = itemId; }
     
     // Start is called before the first frame update
     void Start()

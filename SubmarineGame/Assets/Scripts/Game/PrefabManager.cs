@@ -16,6 +16,11 @@ public class PrefabManager : MonoBehaviour
     public GameObject GetPrefabPickUpText() { return prefabLibrary[ConstantsManager.gameObjectItemPromptObjectName]; }
     public GameObject GetPrefabRopeCoilObject() { return prefabLibrary[ConstantsManager.gameObjectRopeCoilObjectName]; }
     public GameObject GetPrefabRopeObject() { return prefabLibrary[ConstantsManager.gameObjectRopeObjectName]; }
+    public GameObject GetPrefabByName(string prefabName) {
+        GameObject prefab = null;
+        prefabLibrary.TryGetValue(prefabName, out prefab);
+        return prefab;
+    }
 
     private Dictionary<string, Sprite> textureLibrary = new Dictionary<string, Sprite>();
     public Sprite GetTextureById(string itemId) {
@@ -44,6 +49,7 @@ public class PrefabManager : MonoBehaviour
 
     private void LoadPrefabs() {
         string fileName = "";
+        string prefabName = "";
 
         fileName = ConstantsManager.filePrefabValue + ConstantsManager.fileWorldValue + ConstantsManager.gameObjectBubblesObjectName;
         prefabLibrary.Add(ConstantsManager.gameObjectBubblesObjectName ,Resources.Load<GameObject>(fileName));
@@ -71,6 +77,10 @@ public class PrefabManager : MonoBehaviour
         
         fileName = ConstantsManager.filePrefabValue + ConstantsManager.fileWorldValue + ConstantsManager.gameObjectRopeObjectName;
         prefabLibrary.Add(ConstantsManager.gameObjectRopeObjectName ,Resources.Load<GameObject>(fileName));
+
+        prefabName = ConstantsManager.gameObjectGenericDisplayObject;
+        fileName = ConstantsManager.fileToolsPrefabsValue + prefabName;
+        prefabLibrary.Add(prefabName, Resources.Load<GameObject>(fileName));
     }
 
     private void LoadTextures() {

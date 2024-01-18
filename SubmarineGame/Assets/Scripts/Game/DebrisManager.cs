@@ -118,5 +118,6 @@ public class DebrisManager : MonoBehaviour
             Quaternion.identity
         );
         newDebris.GetComponent<Debris>().SetSpawnTime(Time.time);
+        newDebris.GetComponent<Debris>().SetItemId(ConstantsManager.itemIdWood);
     }
 }

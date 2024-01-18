@@ -8,6 +8,7 @@ public class Net : MonoBehaviour
 
     private float tickTimer = 0;
     private List<GameObject> caughtDebris = new List<GameObject>();
+    public List<GameObject> GetCaughtDebris() { return caughtDebris; }
     
     // Start is called before the first frame update
     void Start()

@@ -12,6 +12,7 @@ public class Item : MonoBehaviour
     public string GetItemId() { return itemId; }
     public int itemQuantity;
     public int GetItemQuantity() { return itemQuantity; }
+    public void SetItemQuantity(int itemQuantity) { this.itemQuantity = itemQuantity; }
 
     public Item() {
         itemIcon = null;
@@ -30,6 +31,10 @@ public class Item : MonoBehaviour
         this.itemId = itemId;
         this.itemDisplayName = itemDisplayName;
         this.itemQuantity = itemQuantity;
+    }
+
+    public Item(Item item) {
+        CloneItemValues(item);
     }
     
     public void CloneItemValues(Item item) {

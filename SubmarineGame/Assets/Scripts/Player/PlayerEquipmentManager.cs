@@ -63,6 +63,20 @@ public class PlayerEquipmentManager : MonoBehaviour
     }
 
     public void PickUpItem(Item item) {
+        // Check for existing item and add new item quantity to the existing item.
+        Debug.Log("Checking for existing item.");
+        if (inventoryHotBar.Count > 0) {
+            for (int slotIndex = 1; slotIndex <= 10; slotIndex++) {
+                Item[] itemInSlot = GetItemFromInventoryHotBar(slotIndex);
+                if (itemInSlot.Length > 0 && itemInSlot[0].GetItemId() == item.GetItemId()) {
+                    itemInSlot[0].SetItemQuantity(itemInSlot[0].GetItemQuantity() + item.GetItemQuantity());
+                    return;
+                }
+            }
+        }
+        
+        // Add item to hotbar if a slot is available.
+        Debug.Log("Checking for empty slot.");
         if (inventoryHotBar.Count < 10) {
             int emptySlot = -1;
             for (int slotIndex = 1; slotIndex <= 10; slotIndex++) {
@@ -74,13 +88,30 @@ public class PlayerEquipmentManager : MonoBehaviour
                     emptySlot = slotIndex;
                 }
             }
-            inventoryHotBar.Add(emptySlot, item);
+            if (emptySlot > 0) {
+                inventoryHotBar.Add(emptySlot, item);
+            }
             if (emptySlot == InterfaceManager.instance.GetHotBarIndex()) {
                 UpdateEquippedObject();
             }
-            return;
+            if (emptySlot != -1) {
+                return;
+            }
         }
-        inventory.Add(item);
+
+        // Update item quantity or add item as new to inventory if no hotbar slot was available.
+        Debug.Log("Adding item to inventory.");
+        bool foundItem = false;
+        foreach (Item inventoryItem in inventory) {
+            if (item.GetItemId() == inventoryItem.GetItemId()) {
+                foundItem = true;
+                inventoryItem.SetItemQuantity(inventoryItem.GetItemQuantity() + item.GetItemQuantity());
+                break;
+            }
+        }
+        if (!foundItem) {
+            inventory.Add(item);
+        }
     }
 
     private void ProcessDropInput() {
@@ -113,6 +144,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         );
         Item itemDropScript = itemDrop.GetComponent<Item>();
         itemDropScript.CloneItemValues(itemToDrop);
+        itemDrop.transform.Find(ConstantsManager.gameObjectAnimationName).Find(ConstantsManager.gameObjectMesh).GetComponent<SpriteRenderer>().sprite = itemDropScript.GetItemIcon();
     }
 
     private void ProcessInventoryInput() {

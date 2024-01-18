@@ -30,7 +30,7 @@ public class PlayerAnimationController : MonoBehaviour
     }
 
     public GameObject GetDisplayPrefab(string itemCode) {
-        GameObject prefab = null;
+        GameObject prefab = PrefabManager.instance.GetPrefabByName(ConstantsManager.gameObjectGenericDisplayObject);
 
         if (ConstantsManager.itemIdNet.Equals(itemCode)) {
             prefab = PrefabManager.instance.GetPrefabNetObject();
@@ -40,14 +40,13 @@ public class PlayerAnimationController : MonoBehaviour
     }
 
     private string GetItemAnimationName(string baseName) {
-        string animationName = "";
+        string animationName = baseName;
 
-        if (!playerEquipmentManager.IsItemEquipped()) {
-            animationName = baseName;
-        } else {
-            Item equippedItem = playerEquipmentManager.GetEquippedItem()[0];
-            string itemId = equippedItem.GetItemId();
-            animationName = baseName + ConstantsManager.splitCharUnderscore + itemId;
+        if (playerEquipmentManager.IsItemEquipped()) {
+            string equippedItemId = playerEquipmentManager.GetEquippedItem()[0].GetItemId();
+            if (equippedItemId == ConstantsManager.itemIdNet) {
+                animationName += ConstantsManager.splitCharUnderscore + equippedItemId;
+            }
         }
 
         return animationName;
@@ -60,10 +59,13 @@ public class PlayerAnimationController : MonoBehaviour
             Item equippedItem = playerEquipmentManager.GetEquippedItem()[0];
             string itemId = equippedItem.GetItemId();
 
-            
+            Transform referenceTransform = transform.Find(ConstantsManager.gameObjectCameraName).Find(ConstantsManager.gameObjectAnimationName).Find(ConstantsManager.gameObjectArmMesh).Find(ConstantsManager.gameObjectLeftArm).Find(ConstantsManager.gameObjectFist);
+            if (itemId == ConstantsManager.itemIdNet) {
+                referenceTransform = GameObject.FindGameObjectWithTag(ConstantsManager.tagItemReference).transform;
+            }
             displayObject = Instantiate(
                 GetDisplayPrefab(itemId),
-                GameObject.FindGameObjectWithTag(ConstantsManager.tagItemReference).transform
+                referenceTransform
             );
         }
 

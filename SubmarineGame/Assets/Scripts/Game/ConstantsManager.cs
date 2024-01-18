@@ -31,16 +31,20 @@ public class ConstantsManager : MonoBehaviour
     public static readonly string fileInterfaceValue = "Interface/";
     public static readonly string filePrefabValue = "Prefabs/";
     public static readonly string fileItemTexturesValue = "Textures/Items/";
+    public static readonly string fileToolsPrefabsValue = "Prefabs/Tools/";
     public static readonly string fileToolsValue = "Tools/";
     public static readonly string fileWorldValue = "World/";
     
     public static readonly string gameObjectAnimationName = "Animation";
+    public static readonly string gameObjectArmMesh = "ArmMesh";
     public static readonly string gameObjectBackgroundName = "Background";
     public static readonly string gameObjectBubblesObjectName = "BubblesObject";
     public static readonly string gameObjectCameraName = "Camera";
     public static readonly string gameObjectDebrisItemName = "DebrisItem";
     public static readonly string gameObjectDebrisObjectName = "DebrisObject";
     public static readonly string gameObjectDisplaySpaceName = "DisplaySpace";
+    public static readonly string gameObjectFist = "Fist";
+    public static readonly string gameObjectGenericDisplayObject = "GenericDisplayObject";
     public static readonly string gameObjectHighlightContainerName = "HighlightContainer";
     public static readonly string gameObjectHighlightName = "Highlight";
     public static readonly string gameObjectHotBarObject = "HotBarObject";
@@ -50,6 +54,8 @@ public class ConstantsManager : MonoBehaviour
     public static readonly string gameObjectInventoryScreenObjectName = "InventoryScreenObject";
     public static readonly string gameObjectItemName = "Item";
     public static readonly string gameObjectItemPromptObjectName = "ItemPromptObject";
+    public static readonly string gameObjectLeftArm = "LeftArm";
+    public static readonly string gameObjectMesh = "Mesh";
     public static readonly string gameObjectNetObjectName = "net";
     public static readonly string gameObjectQuantityName = "Quantity";
     public static readonly string gameObjectRopeAnchor = "RopeAnchor";

@@ -104,6 +104,16 @@ public class PlayerInteractionManager : MonoBehaviour
         }
 
         if (IsToolRetrievable()) {
+            // Add caught debris to player inventory.
+            List<GameObject> caughtDebris = thrownDisplayObject.GetComponent<Net>().GetCaughtDebris();
+            foreach (GameObject caughtDebrisObject in caughtDebris) {
+                Item debrisItem = ItemManager.instance.GetItemById(caughtDebrisObject.GetComponent<Debris>().GetItemId());
+                Item newItem = new Item(debrisItem);
+                newItem.SetItemQuantity(1);
+                playerEquipmentManager.PickUpItem(newItem);
+            }
+
+            // Destroy debris and net.
             thrownDisplayObject.GetComponent<Net>().DestroyCaughtDebris();
             DestroyDisplayObjects();
             playerStateManager.TriggerHeldState();
