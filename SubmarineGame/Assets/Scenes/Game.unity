@@ -437,7 +437,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: Slot_6
+      value: ItemTile_6
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x
@@ -706,7 +706,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: Slot_8
+      value: ItemTile_8
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x
@@ -1114,7 +1114,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: Slot_4
+      value: ItemTile_4
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x
@@ -1440,7 +1440,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: Slot_9
+      value: ItemTile_9
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x
@@ -1546,7 +1546,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: Slot_2
+      value: ItemTile_2
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x
@@ -1735,7 +1735,7 @@ GameObject:
   - component: {fileID: 1764457798}
   - component: {fileID: 1764457797}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Reticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1809,7 +1809,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: Slot_1
+      value: ItemTile_1
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x
@@ -1910,7 +1910,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: Slot_10
+      value: ItemTile_10
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x
@@ -2103,7 +2103,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: Slot_3
+      value: ItemTile_3
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x
@@ -2204,7 +2204,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: Slot_5
+      value: ItemTile_5
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x
@@ -2482,7 +2482,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: Slot_7
+      value: ItemTile_7
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x

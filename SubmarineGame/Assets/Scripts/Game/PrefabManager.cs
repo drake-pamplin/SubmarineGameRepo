@@ -88,6 +88,10 @@ public class PrefabManager : MonoBehaviour
         string textureName = "";
 
         // Item textures.
+        textureName = ConstantsManager.itemIdBlankTile;
+        fileName = ConstantsManager.fileItemTexturesValue + textureName;
+        textureLibrary.Add(textureName, Resources.Load<Sprite>(fileName));
+
         textureName = ConstantsManager.itemIdNet;
         fileName = ConstantsManager.fileItemTexturesValue + textureName;
         textureLibrary.Add(textureName, Resources.Load<Sprite>(fileName));

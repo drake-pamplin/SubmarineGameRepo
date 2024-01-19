@@ -48,7 +48,6 @@ public class ConstantsManager : MonoBehaviour
     public static readonly string gameObjectHighlightContainerName = "HighlightContainer";
     public static readonly string gameObjectHighlightName = "Highlight";
     public static readonly string gameObjectHotBarObject = "HotBarObject";
-    public static readonly string gameObjectHotBarSlotBase = "Slot";
     public static readonly string gameObjectIconName = "Icon";
     public static readonly string gameObjectInventoryItemTileName = "ItemTile";
     public static readonly string gameObjectInventoryScreenObjectName = "InventoryScreenObject";
@@ -73,6 +72,7 @@ public class ConstantsManager : MonoBehaviour
         return itemDisplayName;
     }
     
+    public static readonly string itemIdBlankTile = "blankTile";
     public static readonly string itemIdNet = "net";
     public static readonly string itemIdWood = "wood";
     public static readonly List<string> itemIdThrowable = new List<string> {

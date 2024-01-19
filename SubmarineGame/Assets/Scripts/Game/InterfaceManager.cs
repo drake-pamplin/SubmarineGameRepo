@@ -105,10 +105,10 @@ public class InterfaceManager : MonoBehaviour
         GameObject slotContainer = GameObject.FindGameObjectWithTag(ConstantsManager.tagHotBar).transform.Find(ConstantsManager.gameObjectBackgroundName).gameObject;
         for (int slotIndex = 1; slotIndex <= 10; slotIndex++) {
             Item[] item = GameObject.FindGameObjectWithTag(ConstantsManager.tagPlayer).GetComponent<PlayerEquipmentManager>().GetItemFromInventoryHotBar(slotIndex);
-            GameObject slotObject = slotContainer.transform.Find(ConstantsManager.gameObjectHotBarSlotBase + ConstantsManager.splitCharUnderscore + slotIndex).gameObject;
+            GameObject slotObject = slotContainer.transform.Find(ConstantsManager.gameObjectInventoryItemTileName + ConstantsManager.splitCharUnderscore + slotIndex).gameObject;
             if (item.Length == 0) {
                 slotObject.GetComponent<Item>().CloneItemValues(new Item());
-                slotObject.transform.Find(ConstantsManager.gameObjectIconName).gameObject.GetComponent<Image>().sprite = null;
+                slotObject.transform.Find(ConstantsManager.gameObjectIconName).gameObject.GetComponent<Image>().sprite = PrefabManager.instance.GetTextureById(ConstantsManager.itemIdBlankTile);
                 slotObject.transform.Find(ConstantsManager.gameObjectIconName).Find(ConstantsManager.gameObjectQuantityName).gameObject.GetComponent<Text>().text = "0";
                 continue;
             }
