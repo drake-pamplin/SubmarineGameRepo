@@ -31,6 +31,7 @@ public class ItemManager : MonoBehaviour
         Item newItem = new Item(
             itemIcon,
             itemId,
+            Item.ItemInventoryLocation.None,
             itemDisplayName,
             0
         );

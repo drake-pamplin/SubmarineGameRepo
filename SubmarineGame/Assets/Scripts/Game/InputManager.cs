@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
@@ -14,14 +15,13 @@ public class InputManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = true;
+        Debug.Log("Screen width: " + Screen.width + "\nReference width: " + GameObject.FindGameObjectWithTag(ConstantsManager.tagCanvas).GetComponent<CanvasScaler>().referenceResolution.x);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // Debug.Log(GetMousePosition());
     }
 
     public bool GetDropInput() {
@@ -113,6 +113,14 @@ public class InputManager : MonoBehaviour
 
         inputValue = Mouse.current.delta.ReadValue();
         inputValue.y *= -1;
+
+        return inputValue;
+    }
+
+    public Vector2 GetMousePosition() {
+        Vector2 inputValue = Vector2.zero;
+
+        inputValue = Mouse.current.position.ReadValue();
 
         return inputValue;
     }

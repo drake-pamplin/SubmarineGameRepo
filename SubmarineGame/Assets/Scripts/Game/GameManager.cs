@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
     public float GetPlayerBreastStrokeSpeed() { return playerBreastStrokeSpeed; }
     public float playerFreestyleStrokeSpeed;
     public float GetPlayerFreestyleStrokeSpeed() { return playerFreestyleStrokeSpeed; }
+    public int playerInventorySize = 30;
+    public int GetPlayerInventorySize() { return playerInventorySize; }
     public float playerJumpForce;
     public float GetPlayerJumpForce() { return playerJumpForce; }
     public float playerLookClamp;
@@ -106,7 +108,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame

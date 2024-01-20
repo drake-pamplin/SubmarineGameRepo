@@ -78,6 +78,12 @@ public class PrefabManager : MonoBehaviour
         fileName = ConstantsManager.filePrefabValue + ConstantsManager.fileWorldValue + ConstantsManager.gameObjectRopeObjectName;
         prefabLibrary.Add(ConstantsManager.gameObjectRopeObjectName ,Resources.Load<GameObject>(fileName));
 
+        // Interface
+        prefabName = ConstantsManager.gameObjectMoveIndicator;
+        fileName = ConstantsManager.fileInterfacePrefabsValue + prefabName;
+        prefabLibrary.Add(prefabName, Resources.Load<GameObject>(fileName));
+        
+        // Tools
         prefabName = ConstantsManager.gameObjectGenericDisplayObject;
         fileName = ConstantsManager.fileToolsPrefabsValue + prefabName;
         prefabLibrary.Add(prefabName, Resources.Load<GameObject>(fileName));

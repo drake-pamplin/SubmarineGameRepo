@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class InterfaceManager : MonoBehaviour
 {
     public static InterfaceManager instance;
+    void Awake() {
+        instance = this;
+    }
 
     private int hotBarIndex = 1;
     public int GetHotBarIndex() { return hotBarIndex; }
@@ -15,10 +18,7 @@ public class InterfaceManager : MonoBehaviour
     */
     private GameObject interfaceDisplayObject = null;
     private GameObject pickUpTextObject = null;
-
-    void Awake() {
-        instance = this;
-    }
+    private GameObject moveIndicator = null;
     
     // Start is called before the first frame update
     void Start()
@@ -58,16 +58,36 @@ public class InterfaceManager : MonoBehaviour
         return false;
     }
 
+    public void MoveEnd(GameObject selectedTile) {
+        Destroy(moveIndicator);
+    }
+
+    public void MoveStart(GameObject selectedTile) {
+        Item item = selectedTile.GetComponent<Item>();
+        if (item == null || string.IsNullOrEmpty(item.GetItemId())) {
+            Debug.LogError("No item in slot.");
+            return;
+        }
+        Debug.Log("Beginning move for " + item.GetItemDisplayName());
+        moveIndicator = Instantiate(
+            PrefabManager.instance.GetPrefabByName(ConstantsManager.gameObjectMoveIndicator),
+            GameObject.FindGameObjectWithTag(ConstantsManager.tagCanvas).transform
+        );
+        // moveIndicator.GetComponent<RectTransform>().anchoredPosition = selectedTile.GetComponent<RectTransform>().anchoredPosition;
+    }
+
     public void ToggleInventoryDisplay() {
         if (interfaceDisplayObject == null) {
             interfaceDisplayObject = Instantiate(
                 PrefabManager.instance.GetPrefabInventoryScreenObject(),
                 GameObject.FindGameObjectWithTag(ConstantsManager.tagCanvas).transform
             );
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
 
             GameObject player = GameObject.FindGameObjectWithTag(ConstantsManager.tagPlayer);
             PlayerEquipmentManager playerEquipmentManager = player.GetComponent<PlayerEquipmentManager>();
-            List<Item> inventory = playerEquipmentManager.GetInventory();
+            Dictionary<int, Item> inventory = playerEquipmentManager.GetInventory();
 
             if (inventory.Count == 0) {
                 return;
@@ -95,6 +115,8 @@ public class InterfaceManager : MonoBehaviour
 
             return;
         } else {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             Destroy(interfaceDisplayObject);
             interfaceDisplayObject = null;
             return;

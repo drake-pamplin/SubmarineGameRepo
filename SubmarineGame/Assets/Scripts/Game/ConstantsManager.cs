@@ -28,6 +28,7 @@ public class ConstantsManager : MonoBehaviour
     public static readonly string animationWalkBase = "Walk";
     public static readonly string animationWalkName = "Walk";
 
+    public static readonly string fileInterfacePrefabsValue = "Prefabs/Interface/";
     public static readonly string fileInterfaceValue = "Interface/";
     public static readonly string filePrefabValue = "Prefabs/";
     public static readonly string fileItemTexturesValue = "Textures/Items/";
@@ -55,6 +56,7 @@ public class ConstantsManager : MonoBehaviour
     public static readonly string gameObjectItemPromptObjectName = "ItemPromptObject";
     public static readonly string gameObjectLeftArm = "LeftArm";
     public static readonly string gameObjectMesh = "Mesh";
+    public static readonly string gameObjectMoveIndicator = "MoveIndicator";
     public static readonly string gameObjectNetObjectName = "net";
     public static readonly string gameObjectQuantityName = "Quantity";
     public static readonly string gameObjectRopeAnchor = "RopeAnchor";

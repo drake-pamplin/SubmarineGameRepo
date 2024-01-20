@@ -25,8 +25,8 @@ public class PlayerEquipmentManager : MonoBehaviour
         return equippedObject.Length > 0;
     }
 
-    private List<Item> inventory = new List<Item>();
-    public List<Item> GetInventory() { return inventory; }
+    private Dictionary<int, Item> inventory = new Dictionary<int, Item>();
+    public Dictionary<int, Item> GetInventory() { return inventory; }
     private Dictionary<int, Item> inventoryHotBar = new Dictionary<int, Item>();
     public Dictionary<int, Item> GetInventoryHotBar() { return inventoryHotBar; }
     public Item[] GetItemFromInventoryHotBar(int index) {
@@ -77,8 +77,8 @@ public class PlayerEquipmentManager : MonoBehaviour
         
         // Add item to hotbar if a slot is available.
         Debug.Log("Checking for empty slot.");
+        int emptySlot = -1;
         if (inventoryHotBar.Count < 10) {
-            int emptySlot = -1;
             for (int slotIndex = 1; slotIndex <= 10; slotIndex++) {
                 if (emptySlot > 0) {
                     continue;
@@ -90,6 +90,7 @@ public class PlayerEquipmentManager : MonoBehaviour
             }
             if (emptySlot > 0) {
                 inventoryHotBar.Add(emptySlot, item);
+                item.SetItemInventoryLocationToHotbar();
             }
             if (emptySlot == InterfaceManager.instance.GetHotBarIndex()) {
                 UpdateEquippedObject();
@@ -101,16 +102,27 @@ public class PlayerEquipmentManager : MonoBehaviour
 
         // Update item quantity or add item as new to inventory if no hotbar slot was available.
         Debug.Log("Adding item to inventory.");
-        bool foundItem = false;
-        foreach (Item inventoryItem in inventory) {
-            if (item.GetItemId() == inventoryItem.GetItemId()) {
-                foundItem = true;
-                inventoryItem.SetItemQuantity(inventoryItem.GetItemQuantity() + item.GetItemQuantity());
+        // Attempting to add item to an existing stack.
+        for (int inventoryIndex = 0; inventoryIndex < GameManager.instance.GetPlayerInventorySize(); inventoryIndex++) {
+            Item itemInSlot = null;
+            if (inventory.TryGetValue(inventoryIndex, out itemInSlot) && itemInSlot.GetItemId() == item.GetItemId()) {
+                itemInSlot.SetItemQuantity(itemInSlot.GetItemQuantity() + item.GetItemQuantity());
                 break;
             }
         }
-        if (!foundItem) {
-            inventory.Add(item);
+
+        // Attempting to add item to a new slot.
+        emptySlot = -1;
+        for (int inventoryIndex = 0; inventoryIndex < GameManager.instance.GetPlayerInventorySize(); inventoryIndex++) {
+            if (emptySlot >= 0) {
+                return;
+            }
+
+            if (!inventory.ContainsKey(inventoryIndex)) {
+                emptySlot = inventoryIndex;
+                inventory.Add(inventoryIndex, item);
+                item.SetItemInventoryLocationToInventory();
+            }
         }
     }
 
