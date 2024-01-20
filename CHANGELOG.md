@@ -14,3 +14,5 @@ v0.2.0-skimming ================================================================
 - Added debris object spawning.
 - Added net throwing and collection logic.
 - Refined item logic and modeling.
+
+v0.3.0-inventory-management =======================================================================
