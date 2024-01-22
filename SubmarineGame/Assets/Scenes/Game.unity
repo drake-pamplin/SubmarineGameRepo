@@ -438,7 +438,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: ItemTile_6
+      value: ItemTile_5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
+      propertyPath: inventoryLocation
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x
@@ -708,7 +712,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: ItemTile_8
+      value: ItemTile_7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
+      propertyPath: inventoryLocation
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x
@@ -1116,7 +1124,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: ItemTile_4
+      value: ItemTile_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
+      propertyPath: inventoryLocation
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x
@@ -1518,7 +1530,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: ItemTile_9
+      value: ItemTile_8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
+      propertyPath: inventoryLocation
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x
@@ -1624,7 +1640,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: ItemTile_2
+      value: ItemTile_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
+      propertyPath: inventoryLocation
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x
@@ -1775,6 +1795,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34b9ce35ca38954c98eaafcefd92d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
+  inventoryLocation: 0
 --- !u!1 &1746741471
 GameObject:
   m_ObjectHideFlags: 0
@@ -1937,7 +1959,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: ItemTile_1
+      value: ItemTile_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
+      propertyPath: inventoryLocation
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x
@@ -2038,7 +2064,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: ItemTile_10
+      value: ItemTile_9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
+      propertyPath: inventoryLocation
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x
@@ -2231,7 +2261,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: ItemTile_3
+      value: ItemTile_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
+      propertyPath: inventoryLocation
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x
@@ -2332,7 +2366,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: ItemTile_5
+      value: ItemTile_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
+      propertyPath: inventoryLocation
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x
@@ -2610,7 +2648,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
-      value: ItemTile_7
+      value: ItemTile_6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
+      propertyPath: inventoryLocation
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Pivot.x

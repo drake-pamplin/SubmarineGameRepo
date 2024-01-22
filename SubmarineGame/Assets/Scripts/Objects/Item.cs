@@ -20,6 +20,8 @@ public class Item : MonoBehaviour
     public ItemInventoryLocation GetItemInventoryLocation() { return itemInventoryLocation; }
     public void SetItemInventoryLocationToHotbar() { itemInventoryLocation = ItemInventoryLocation.Hotbar; }
     public void SetItemInventoryLocationToInventory() { itemInventoryLocation = ItemInventoryLocation.Inventory; }
+    public bool IsItemInventoryLocationHotbar() { return itemInventoryLocation == ItemInventoryLocation.Hotbar; }
+    public bool IsItemInventoryLocationInventory() { return itemInventoryLocation == ItemInventoryLocation.Inventory; }
     public int itemQuantity;
     public int GetItemQuantity() { return itemQuantity; }
     public void SetItemQuantity(int itemQuantity) { this.itemQuantity = itemQuantity; }

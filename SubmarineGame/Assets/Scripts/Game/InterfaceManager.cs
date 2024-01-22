@@ -10,7 +10,7 @@ public class InterfaceManager : MonoBehaviour
         instance = this;
     }
 
-    private int hotBarIndex = 1;
+    private int hotBarIndex = 0;
     public int GetHotBarIndex() { return hotBarIndex; }
     /*
         Menu layers: 
@@ -19,6 +19,8 @@ public class InterfaceManager : MonoBehaviour
     private GameObject interfaceDisplayObject = null;
     private GameObject pickUpTextObject = null;
     private GameObject moveIndicator = null;
+    private Item moveItem = null;
+    private GameObject startTile = null;
     
     // Start is called before the first frame update
     void Start()
@@ -38,15 +40,15 @@ public class InterfaceManager : MonoBehaviour
             .Find(ConstantsManager.gameObjectHighlightContainerName)
             .Find(ConstantsManager.gameObjectHighlightName).gameObject;
         int newIndex = hotBarIndex + (1 * (up ? 1 : -1));
-        if (newIndex > 10) {
+        if (newIndex > 9) {
             newIndex = 1;
         }
-        if (newIndex < 1) {
-            newIndex = 10;
+        if (newIndex < 0) {
+            newIndex = 9;
         }
         hotBarIndex = newIndex;
 
-        int xCoord = (hotBarIndex - 1) * GameManager.instance.GetInterfaceHotBarTileSideLength();
+        int xCoord = hotBarIndex * GameManager.instance.GetInterfaceHotBarTileSideLength();
         highlightObject.transform.localPosition = new Vector3(xCoord, highlightObject.transform.localPosition.y, 0);
     }
 
@@ -58,8 +60,49 @@ public class InterfaceManager : MonoBehaviour
         return false;
     }
 
-    public void MoveEnd(GameObject selectedTile) {
+    public void MoveEnd(GameObject endTile) {
         Destroy(moveIndicator);
+
+        // Get tile details.
+        int slotIndex = endTile.GetComponent<ItemSlot>().GetIndex();
+
+        // Get item at end tile.
+        GameObject player = GameObject.FindGameObjectWithTag(ConstantsManager.tagPlayer);
+        PlayerEquipmentManager playerEquipmentManager = player.GetComponent<PlayerEquipmentManager>();
+        Item[] itemAtDestination = new Item[0];
+        if (endTile.GetComponent<ItemSlot>().IsSlotInHotbar()) {
+            itemAtDestination = playerEquipmentManager.GetItemFromInventoryHotBarByIndex(slotIndex);
+        }
+        if (endTile.GetComponent<ItemSlot>().IsSlotInInventory()) {
+            itemAtDestination = playerEquipmentManager.GetItemFromInventoryByIndex(slotIndex);
+        }
+
+        // Set end tile to move item.
+        if (endTile.GetComponent<ItemSlot>().IsSlotInHotbar()) {
+            playerEquipmentManager.SetItemInInventoryHotBarByIndex(slotIndex, moveItem);
+        }
+        if (endTile.GetComponent<ItemSlot>().IsSlotInInventory()) {
+            playerEquipmentManager.SetItemInInventoryByIndex(slotIndex, moveItem);
+        }
+
+        // Set start tile to nothing if the end tile was empty, or the item in the end tile slot if occupied.
+        ItemSlot startTileScript = startTile.GetComponent<ItemSlot>();
+        if (itemAtDestination.Length == 0) {
+            if (startTileScript.IsSlotInHotbar()) {
+                playerEquipmentManager.RemoveItemFromInventoryHotBarByIndex(startTileScript.GetIndex());
+            }
+            if (startTileScript.IsSlotInInventory()) {
+                playerEquipmentManager.RemoveItemFromInventoryByIndex(startTileScript.GetIndex());
+            }
+        } else {
+            if (startTileScript.IsSlotInHotbar()) {
+                playerEquipmentManager.SetItemInInventoryHotBarByIndex(startTileScript.GetIndex(), itemAtDestination[0]);
+            }
+            if (startTileScript.IsSlotInInventory()) {
+                playerEquipmentManager.SetItemInInventoryByIndex(startTileScript.GetIndex(), itemAtDestination[0]);
+            }
+        }
+
     }
 
     public void MoveStart(GameObject selectedTile) {
@@ -73,7 +116,9 @@ public class InterfaceManager : MonoBehaviour
             PrefabManager.instance.GetPrefabByName(ConstantsManager.gameObjectMoveIndicator),
             GameObject.FindGameObjectWithTag(ConstantsManager.tagCanvas).transform
         );
-        // moveIndicator.GetComponent<RectTransform>().anchoredPosition = selectedTile.GetComponent<RectTransform>().anchoredPosition;
+        moveIndicator.transform.Find(ConstantsManager.gameObjectIconName).GetComponent<Image>().sprite = item.GetItemIcon();
+        moveItem = item;
+        startTile = selectedTile;
     }
 
     public void ToggleInventoryDisplay() {
@@ -125,8 +170,8 @@ public class InterfaceManager : MonoBehaviour
 
     public void UpdateHotBarSlots() {
         GameObject slotContainer = GameObject.FindGameObjectWithTag(ConstantsManager.tagHotBar).transform.Find(ConstantsManager.gameObjectBackgroundName).gameObject;
-        for (int slotIndex = 1; slotIndex <= 10; slotIndex++) {
-            Item[] item = GameObject.FindGameObjectWithTag(ConstantsManager.tagPlayer).GetComponent<PlayerEquipmentManager>().GetItemFromInventoryHotBar(slotIndex);
+        for (int slotIndex = 0; slotIndex < 10; slotIndex++) {
+            Item[] item = GameObject.FindGameObjectWithTag(ConstantsManager.tagPlayer).GetComponent<PlayerEquipmentManager>().GetItemFromInventoryHotBarByIndex(slotIndex);
             GameObject slotObject = slotContainer.transform.Find(ConstantsManager.gameObjectInventoryItemTileName + ConstantsManager.splitCharUnderscore + slotIndex).gameObject;
             if (item.Length == 0) {
                 slotObject.GetComponent<Item>().CloneItemValues(new Item());

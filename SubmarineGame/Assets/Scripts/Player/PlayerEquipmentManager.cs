@@ -27,17 +27,33 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     private Dictionary<int, Item> inventory = new Dictionary<int, Item>();
     public Dictionary<int, Item> GetInventory() { return inventory; }
+    public Item[] GetItemFromInventoryByIndex(int index) {
+        Item[] item = new Item[0];
+        if (inventory.TryGetValue(index, out Item itemFound)) {
+            item = new Item[] { itemFound };
+        }
+        return item;
+    }
+    public void RemoveItemFromInventoryByIndex(int index) {
+        inventory.Remove(index);
+    }
+    public void SetItemInInventoryByIndex(int index, Item item) {
+        inventory[index] = item;
+    }
     private Dictionary<int, Item> inventoryHotBar = new Dictionary<int, Item>();
     public Dictionary<int, Item> GetInventoryHotBar() { return inventoryHotBar; }
-    public Item[] GetItemFromInventoryHotBar(int index) {
+    public Item[] GetItemFromInventoryHotBarByIndex(int index) {
         Item[] item = new Item[0];
         if (inventoryHotBar.TryGetValue(index, out Item itemFound)) {
             item = new Item[] { itemFound };
         }
         return item;
     }
-    private void RemoveItemFromInventoryHotBar(int index) {
+    public void RemoveItemFromInventoryHotBarByIndex(int index) {
         inventoryHotBar.Remove(index);
+    }
+    public void SetItemInInventoryHotBarByIndex(int index, Item item) {
+        inventoryHotBar[index] = item;
     }
     
     // Start is called before the first frame update
@@ -66,8 +82,8 @@ public class PlayerEquipmentManager : MonoBehaviour
         // Check for existing item and add new item quantity to the existing item.
         Debug.Log("Checking for existing item.");
         if (inventoryHotBar.Count > 0) {
-            for (int slotIndex = 1; slotIndex <= 10; slotIndex++) {
-                Item[] itemInSlot = GetItemFromInventoryHotBar(slotIndex);
+            for (int slotIndex = 0; slotIndex <= 10; slotIndex++) {
+                Item[] itemInSlot = GetItemFromInventoryHotBarByIndex(slotIndex);
                 if (itemInSlot.Length > 0 && itemInSlot[0].GetItemId() == item.GetItemId()) {
                     itemInSlot[0].SetItemQuantity(itemInSlot[0].GetItemQuantity() + item.GetItemQuantity());
                     return;
@@ -79,16 +95,16 @@ public class PlayerEquipmentManager : MonoBehaviour
         Debug.Log("Checking for empty slot.");
         int emptySlot = -1;
         if (inventoryHotBar.Count < 10) {
-            for (int slotIndex = 1; slotIndex <= 10; slotIndex++) {
-                if (emptySlot > 0) {
+            for (int slotIndex = 0; slotIndex <= 10; slotIndex++) {
+                if (emptySlot >= 0) {
                     continue;
                 }
-                Item[] itemInSlot = GetItemFromInventoryHotBar(slotIndex);
+                Item[] itemInSlot = GetItemFromInventoryHotBarByIndex(slotIndex);
                 if (itemInSlot.Length == 0) {
                     emptySlot = slotIndex;
                 }
             }
-            if (emptySlot > 0) {
+            if (emptySlot >= 0) {
                 inventoryHotBar.Add(emptySlot, item);
                 item.SetItemInventoryLocationToHotbar();
             }
@@ -147,7 +163,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         UnequipItem();
         playerInteractionManager.DestroyDisplayObjects();
         playerStateManager.TriggerHeldState();
-        RemoveItemFromInventoryHotBar(InterfaceManager.instance.GetHotBarIndex());
+        RemoveItemFromInventoryHotBarByIndex(InterfaceManager.instance.GetHotBarIndex());
 
         GameObject itemDrop = Instantiate(
             PrefabManager.instance.GetPrefabItem(),
@@ -169,7 +185,7 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     private void ProcessWaterState() {
         if (!playerStateManager.IsMovementStateWater()) {
-            if (!IsItemEquipped() && GetItemFromInventoryHotBar(InterfaceManager.instance.GetHotBarIndex()).Length == 1) {
+            if (!IsItemEquipped() && GetItemFromInventoryHotBarByIndex(InterfaceManager.instance.GetHotBarIndex()).Length == 1) {
                 UpdateEquippedObject();
             }
             return;
@@ -186,7 +202,7 @@ public class PlayerEquipmentManager : MonoBehaviour
 
     public void UpdateEquippedObject() {
         int hotBarIndex = InterfaceManager.instance.GetHotBarIndex();
-        Item[] hotBarItem = GetItemFromInventoryHotBar(hotBarIndex);
+        Item[] hotBarItem = GetItemFromInventoryHotBarByIndex(hotBarIndex);
         if (equippedObject.Length == 0 && hotBarItem.Length == 0) {
             return;
         }

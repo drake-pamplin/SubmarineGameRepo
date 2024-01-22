@@ -5,6 +5,12 @@ using UnityEngine.EventSystems;
 
 public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
+    public int index;
+    public int GetIndex() { return index; }
+    public Item.ItemInventoryLocation inventoryLocation;
+    public bool IsSlotInHotbar() { return inventoryLocation == Item.ItemInventoryLocation.Hotbar; }
+    public bool IsSlotInInventory() { return inventoryLocation == Item.ItemInventoryLocation.Inventory; }
+    
     // Start is called before the first frame update
     void Start()
     {
