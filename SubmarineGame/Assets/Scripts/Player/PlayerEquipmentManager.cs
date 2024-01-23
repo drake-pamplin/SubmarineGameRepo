@@ -78,9 +78,37 @@ public class PlayerEquipmentManager : MonoBehaviour
         ProcessWaterState();
     }
 
+    public void DropItemAtIndex(Item.ItemInventoryLocation inventoryLocation, int index) {
+        Item[] itemToDrop = new Item[0];
+        switch (inventoryLocation) {
+            case Item.ItemInventoryLocation.Hotbar:
+                itemToDrop = GetItemFromInventoryHotBarByIndex(index);
+                RemoveItemFromInventoryHotBarByIndex(index);
+                break;
+            case Item.ItemInventoryLocation.Inventory:
+                itemToDrop = GetItemFromInventoryByIndex(index);
+                RemoveItemFromInventoryByIndex(index);
+                break;
+            default:
+                break;
+        }
+        if (itemToDrop.Length == 0) {
+            Debug.LogError("Item not fond for drop at index " + index + " of inventory " + inventoryLocation.ToString() + ".");
+        }
+
+        GameObject itemDrop = Instantiate(
+            PrefabManager.instance.GetPrefabItem(),
+            transform.position,
+            Quaternion.identity
+        );
+        Item itemDropScript = itemDrop.GetComponent<Item>();
+        itemDropScript.CloneItemValues(itemToDrop[0]);
+        itemDrop.transform.Find(ConstantsManager.gameObjectAnimationName).Find(ConstantsManager.gameObjectMesh).GetComponent<SpriteRenderer>().sprite = itemDropScript.GetItemIcon();
+    }
+
     public void PickUpItem(Item item) {
         // Check for existing item and add new item quantity to the existing item.
-        Debug.Log("Checking for existing item.");
+        Debug.Log("Checking for existing item in hot bar.");
         if (inventoryHotBar.Count > 0) {
             for (int slotIndex = 0; slotIndex <= 10; slotIndex++) {
                 Item[] itemInSlot = GetItemFromInventoryHotBarByIndex(slotIndex);
@@ -90,9 +118,22 @@ public class PlayerEquipmentManager : MonoBehaviour
                 }
             }
         }
+
+        // Update item quantity in inventory if possible.
+        Debug.Log("Checking for existing item in inventory.");
+        // Attempting to add item to an existing stack.
+        if (inventory.Count > 0) {
+            for (int inventoryIndex = 0; inventoryIndex < GameManager.instance.GetPlayerInventorySize(); inventoryIndex++) {
+                Item[] itemInSlot = GetItemFromInventoryByIndex(inventoryIndex);
+                if (itemInSlot.Length > 0 && itemInSlot[0].GetItemId() == item.GetItemId()) {
+                    itemInSlot[0].SetItemQuantity(itemInSlot[0].GetItemQuantity() + item.GetItemQuantity());
+                    return;
+                }
+            }
+        }
         
         // Add item to hotbar if a slot is available.
-        Debug.Log("Checking for empty slot.");
+        Debug.Log("Checking for empty slot in hot bar.");
         int emptySlot = -1;
         if (inventoryHotBar.Count < 10) {
             for (int slotIndex = 0; slotIndex <= 10; slotIndex++) {
@@ -116,18 +157,8 @@ public class PlayerEquipmentManager : MonoBehaviour
             }
         }
 
-        // Update item quantity or add item as new to inventory if no hotbar slot was available.
-        Debug.Log("Adding item to inventory.");
-        // Attempting to add item to an existing stack.
-        for (int inventoryIndex = 0; inventoryIndex < GameManager.instance.GetPlayerInventorySize(); inventoryIndex++) {
-            Item itemInSlot = null;
-            if (inventory.TryGetValue(inventoryIndex, out itemInSlot) && itemInSlot.GetItemId() == item.GetItemId()) {
-                itemInSlot.SetItemQuantity(itemInSlot.GetItemQuantity() + item.GetItemQuantity());
-                break;
-            }
-        }
-
         // Attempting to add item to a new slot.
+        Debug.Log("Checking for empty slot in inventory.");
         emptySlot = -1;
         for (int inventoryIndex = 0; inventoryIndex < GameManager.instance.GetPlayerInventorySize(); inventoryIndex++) {
             if (emptySlot >= 0) {
@@ -159,23 +190,17 @@ public class PlayerEquipmentManager : MonoBehaviour
             return;
         }
 
-        Item itemToDrop = equippedObject[0];
         UnequipItem();
+        DropItemAtIndex(Item.ItemInventoryLocation.Hotbar, InterfaceManager.instance.GetHotBarIndex());
         playerInteractionManager.DestroyDisplayObjects();
         playerStateManager.TriggerHeldState();
-        RemoveItemFromInventoryHotBarByIndex(InterfaceManager.instance.GetHotBarIndex());
-
-        GameObject itemDrop = Instantiate(
-            PrefabManager.instance.GetPrefabItem(),
-            transform.position,
-            Quaternion.identity
-        );
-        Item itemDropScript = itemDrop.GetComponent<Item>();
-        itemDropScript.CloneItemValues(itemToDrop);
-        itemDrop.transform.Find(ConstantsManager.gameObjectAnimationName).Find(ConstantsManager.gameObjectMesh).GetComponent<SpriteRenderer>().sprite = itemDropScript.GetItemIcon();
     }
 
     private void ProcessInventoryInput() {
+        if (playerStateManager.IsThrowStateThrown()) {
+            return;
+        }
+        
         if (!InputManager.instance.GetInventoryInput()) {
             return;
         }

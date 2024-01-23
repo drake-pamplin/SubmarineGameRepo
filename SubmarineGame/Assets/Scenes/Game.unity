@@ -441,6 +441,10 @@ PrefabInstance:
       value: ItemTile_5
       objectReference: {fileID: 0}
     - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
+      propertyPath: index
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: inventoryLocation
       value: 1
       objectReference: {fileID: 0}
@@ -713,6 +717,10 @@ PrefabInstance:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
       value: ItemTile_7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
+      propertyPath: index
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: inventoryLocation
@@ -1127,6 +1135,10 @@ PrefabInstance:
       value: ItemTile_3
       objectReference: {fileID: 0}
     - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
+      propertyPath: index
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: inventoryLocation
       value: 1
       objectReference: {fileID: 0}
@@ -1533,6 +1545,10 @@ PrefabInstance:
       value: ItemTile_8
       objectReference: {fileID: 0}
     - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
+      propertyPath: index
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: inventoryLocation
       value: 1
       objectReference: {fileID: 0}
@@ -1630,6 +1646,87 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 9211533762630278160, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
   m_PrefabInstance: {fileID: 1769802809}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1416650259
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 344437753639151850, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1a065cb608c739f489352a555517dbd0, type: 3}
+    - target: {fileID: 4571519257868177515, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
+      propertyPath: m_Name
+      value: Item
+      objectReference: {fileID: 0}
+    - target: {fileID: 5585597634759262408, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
+      propertyPath: itemId
+      value: wood
+      objectReference: {fileID: 0}
+    - target: {fileID: 5585597634759262408, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
+      propertyPath: itemIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 1a065cb608c739f489352a555517dbd0, type: 3}
+    - target: {fileID: 5585597634759262408, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
+      propertyPath: itemQuantity
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5585597634759262408, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
+      propertyPath: itemDisplayName
+      value: Wood
+      objectReference: {fileID: 0}
+    - target: {fileID: 6587999526339203156, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6587999526339203156, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 6587999526339203156, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6587999526339203156, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6587999526339203156, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6587999526339203156, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6587999526339203156, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6587999526339203156, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6587999526339203156, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6587999526339203156, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6587999526339203156, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c01782799e5bdcc4b88f68d421d3fdde, type: 3}
 --- !u!1001 &1492568988
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1641,6 +1738,10 @@ PrefabInstance:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
       value: ItemTile_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
+      propertyPath: index
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: inventoryLocation
@@ -2067,6 +2168,10 @@ PrefabInstance:
       value: ItemTile_9
       objectReference: {fileID: 0}
     - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
+      propertyPath: index
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: inventoryLocation
       value: 1
       objectReference: {fileID: 0}
@@ -2264,6 +2369,10 @@ PrefabInstance:
       value: ItemTile_2
       objectReference: {fileID: 0}
     - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
+      propertyPath: index
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: inventoryLocation
       value: 1
       objectReference: {fileID: 0}
@@ -2367,6 +2476,10 @@ PrefabInstance:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
       value: ItemTile_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
+      propertyPath: index
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: inventoryLocation
@@ -2649,6 +2762,10 @@ PrefabInstance:
     - target: {fileID: 5035490434320185561, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: m_Name
       value: ItemTile_6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
+      propertyPath: index
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6112180026948767442, guid: 3b05ba51da833cf4498eedb58dc993c7, type: 3}
       propertyPath: inventoryLocation

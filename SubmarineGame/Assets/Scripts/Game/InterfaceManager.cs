@@ -19,7 +19,7 @@ public class InterfaceManager : MonoBehaviour
     private GameObject interfaceDisplayObject = null;
     private GameObject pickUpTextObject = null;
     private GameObject moveIndicator = null;
-    private Item moveItem = null;
+    private Item moveItem = new Item();
     private GameObject startTile = null;
     
     // Start is called before the first frame update
@@ -32,6 +32,7 @@ public class InterfaceManager : MonoBehaviour
     void Update()
     {
         UpdateHotBarSlots();
+        UpdateInventorySlots();
     }
     
     public void HotBarScrollHighlight(bool up) {
@@ -78,15 +79,21 @@ public class InterfaceManager : MonoBehaviour
         }
 
         // Set end tile to move item.
+        if (endTile.GetComponent<ItemSlot>().IsSlotNowhere()) {
+            playerEquipmentManager.DropItemAtIndex(startTile.GetComponent<ItemSlot>().GetItemInventoryLocation(), startTile.GetComponent<ItemSlot>().GetIndex());
+        }
         if (endTile.GetComponent<ItemSlot>().IsSlotInHotbar()) {
+            endTile.GetComponent<Item>().CloneItemValues(moveItem);
             playerEquipmentManager.SetItemInInventoryHotBarByIndex(slotIndex, moveItem);
         }
         if (endTile.GetComponent<ItemSlot>().IsSlotInInventory()) {
+            endTile.GetComponent<Item>().CloneItemValues(moveItem);
             playerEquipmentManager.SetItemInInventoryByIndex(slotIndex, moveItem);
         }
 
         // Set start tile to nothing if the end tile was empty, or the item in the end tile slot if occupied.
         ItemSlot startTileScript = startTile.GetComponent<ItemSlot>();
+        startTile.GetComponent<Item>().CloneItemValues(moveItem);
         if (itemAtDestination.Length == 0) {
             if (startTileScript.IsSlotInHotbar()) {
                 playerEquipmentManager.RemoveItemFromInventoryHotBarByIndex(startTileScript.GetIndex());
@@ -103,6 +110,15 @@ public class InterfaceManager : MonoBehaviour
             }
         }
 
+        if (startTile.GetComponent<ItemSlot>().IsSlotInHotbar() && startTile.GetComponent<ItemSlot>().GetIndex() == GetHotBarIndex()) {
+            playerEquipmentManager.UpdateEquippedObject();
+        }
+        if (endTile.GetComponent<ItemSlot>().IsSlotInHotbar() && endTile.GetComponent<ItemSlot>().GetIndex() == GetHotBarIndex()) {
+            playerEquipmentManager.UpdateEquippedObject();
+        }
+
+        moveItem = new Item();
+        startTile = null;
     }
 
     public void MoveStart(GameObject selectedTile) {
@@ -117,7 +133,7 @@ public class InterfaceManager : MonoBehaviour
             GameObject.FindGameObjectWithTag(ConstantsManager.tagCanvas).transform
         );
         moveIndicator.transform.Find(ConstantsManager.gameObjectIconName).GetComponent<Image>().sprite = item.GetItemIcon();
-        moveItem = item;
+        moveItem.CloneItemValues(item);
         startTile = selectedTile;
     }
 
@@ -129,36 +145,6 @@ public class InterfaceManager : MonoBehaviour
             );
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
-
-            GameObject player = GameObject.FindGameObjectWithTag(ConstantsManager.tagPlayer);
-            PlayerEquipmentManager playerEquipmentManager = player.GetComponent<PlayerEquipmentManager>();
-            Dictionary<int, Item> inventory = playerEquipmentManager.GetInventory();
-
-            if (inventory.Count == 0) {
-                return;
-            }
-
-            GameObject displayArea = interfaceDisplayObject.transform
-                .Find(ConstantsManager.gameObjectBackgroundName)
-                .Find(ConstantsManager.gameObjectDisplaySpaceName).gameObject;
-            int spacesWide = GameManager.instance.GetInterfaceInventoryDisplayWidth() / GameManager.instance.GetInterfaceInventoryTileSideLength();
-            for (int itemIndex = 0; itemIndex < inventory.Count; itemIndex++) {
-                GameObject itemTile = Instantiate(
-                    PrefabManager.instance.GetPrefabInventoryItemTile(),
-                    displayArea.transform
-                );
-                float xCoord = itemTile.GetComponent<Transform>().localPosition.x + (((float)itemIndex % (float)spacesWide) * (float)GameManager.instance.GetInterfaceInventoryTileSideLength());
-                float yCoord = itemTile.GetComponent<Transform>().localPosition.y - (((float)itemIndex / (float)spacesWide)  * (float)GameManager.instance.GetInterfaceInventoryTileSideLength());
-
-                itemTile.GetComponent<Transform>().localPosition = new Vector3(xCoord, yCoord, 0);
-
-                Sprite sprite = inventory[itemIndex].GetItemIcon();
-                Debug.Log(sprite.name);
-                GameObject iconObject = itemTile.transform.Find(ConstantsManager.gameObjectIconName).gameObject;
-                iconObject.GetComponent<Image>().sprite = sprite;
-            }
-
-            return;
         } else {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -172,6 +158,27 @@ public class InterfaceManager : MonoBehaviour
         GameObject slotContainer = GameObject.FindGameObjectWithTag(ConstantsManager.tagHotBar).transform.Find(ConstantsManager.gameObjectBackgroundName).gameObject;
         for (int slotIndex = 0; slotIndex < 10; slotIndex++) {
             Item[] item = GameObject.FindGameObjectWithTag(ConstantsManager.tagPlayer).GetComponent<PlayerEquipmentManager>().GetItemFromInventoryHotBarByIndex(slotIndex);
+            GameObject slotObject = slotContainer.transform.Find(ConstantsManager.gameObjectInventoryItemTileName + ConstantsManager.splitCharUnderscore + slotIndex).gameObject;
+            if (item.Length == 0) {
+                slotObject.GetComponent<Item>().CloneItemValues(new Item());
+                slotObject.transform.Find(ConstantsManager.gameObjectIconName).gameObject.GetComponent<Image>().sprite = PrefabManager.instance.GetTextureById(ConstantsManager.itemIdBlankTile);
+                slotObject.transform.Find(ConstantsManager.gameObjectIconName).Find(ConstantsManager.gameObjectQuantityName).gameObject.GetComponent<Text>().text = "0";
+                continue;
+            }
+            slotObject.GetComponent<Item>().CloneItemValues(item[0]);
+            slotObject.transform.Find(ConstantsManager.gameObjectIconName).gameObject.GetComponent<Image>().sprite = item[0].GetItemIcon();
+            slotObject.transform.Find(ConstantsManager.gameObjectIconName).Find(ConstantsManager.gameObjectQuantityName).gameObject.GetComponent<Text>().text = item[0].GetItemQuantity().ToString();
+        }
+    }
+
+    public void UpdateInventorySlots() {
+        if (interfaceDisplayObject == null) {
+            return;
+        }
+        
+        GameObject slotContainer = interfaceDisplayObject.transform.Find(ConstantsManager.gameObjectBackgroundName).Find(ConstantsManager.gameObjectDisplaySpaceName).gameObject;
+        for (int slotIndex = 0; slotIndex < GameManager.instance.GetPlayerInventorySize(); slotIndex++) {
+            Item[] item = GameObject.FindGameObjectWithTag(ConstantsManager.tagPlayer).GetComponent<PlayerEquipmentManager>().GetItemFromInventoryByIndex(slotIndex);
             GameObject slotObject = slotContainer.transform.Find(ConstantsManager.gameObjectInventoryItemTileName + ConstantsManager.splitCharUnderscore + slotIndex).gameObject;
             if (item.Length == 0) {
                 slotObject.GetComponent<Item>().CloneItemValues(new Item());

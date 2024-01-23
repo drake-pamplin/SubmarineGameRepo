@@ -8,8 +8,10 @@ public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public int index;
     public int GetIndex() { return index; }
     public Item.ItemInventoryLocation inventoryLocation;
+    public Item.ItemInventoryLocation GetItemInventoryLocation() { return inventoryLocation; }
     public bool IsSlotInHotbar() { return inventoryLocation == Item.ItemInventoryLocation.Hotbar; }
     public bool IsSlotInInventory() { return inventoryLocation == Item.ItemInventoryLocation.Inventory; }
+    public bool IsSlotNowhere() { return inventoryLocation == Item.ItemInventoryLocation.None; }
     
     // Start is called before the first frame update
     void Start()
