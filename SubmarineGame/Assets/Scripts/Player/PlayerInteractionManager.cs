@@ -88,7 +88,7 @@ public class PlayerInteractionManager : MonoBehaviour
 
         Item item = interactableObject.GetComponent<Item>();
         Debug.Log("Picked up " + item.GetItemDisplayName());
-        playerEquipmentManager.PickUpItem(item);
+        playerEquipmentManager.PickUpItem(item, item.IsItemStackable());
         Destroy(interactableObject);
     }
 
@@ -110,7 +110,7 @@ public class PlayerInteractionManager : MonoBehaviour
                 Item debrisItem = ItemManager.instance.GetItemById(caughtDebrisObject.GetComponent<Debris>().GetItemId());
                 Item newItem = new Item(debrisItem);
                 newItem.SetItemQuantity(1);
-                playerEquipmentManager.PickUpItem(newItem);
+                playerEquipmentManager.PickUpItem(newItem, newItem.IsItemStackable());
             }
 
             // Destroy debris and net.

@@ -81,7 +81,7 @@ public class PlayerEquipmentManager : MonoBehaviour
     public void DropItemAtIndex(Item.ItemInventoryLocation inventoryLocation, int index) {
         Item[] itemToDrop = new Item[0];
         switch (inventoryLocation) {
-            case Item.ItemInventoryLocation.Hotbar:
+            case Item.ItemInventoryLocation.HotBar:
                 itemToDrop = GetItemFromInventoryHotBarByIndex(index);
                 RemoveItemFromInventoryHotBarByIndex(index);
                 break;
@@ -106,10 +106,10 @@ public class PlayerEquipmentManager : MonoBehaviour
         itemDrop.transform.Find(ConstantsManager.gameObjectAnimationName).Find(ConstantsManager.gameObjectMesh).GetComponent<SpriteRenderer>().sprite = itemDropScript.GetItemIcon();
     }
 
-    public void PickUpItem(Item item) {
+    public void PickUpItem(Item item, bool combineStack) {
         // Check for existing item and add new item quantity to the existing item.
-        Debug.Log("Checking for existing item in hot bar.");
-        if (inventoryHotBar.Count > 0) {
+        if (combineStack && inventoryHotBar.Count > 0) {
+            Debug.Log("Checking for existing item in hot bar.");
             for (int slotIndex = 0; slotIndex <= 10; slotIndex++) {
                 Item[] itemInSlot = GetItemFromInventoryHotBarByIndex(slotIndex);
                 if (itemInSlot.Length > 0 && itemInSlot[0].GetItemId() == item.GetItemId()) {
@@ -120,9 +120,8 @@ public class PlayerEquipmentManager : MonoBehaviour
         }
 
         // Update item quantity in inventory if possible.
-        Debug.Log("Checking for existing item in inventory.");
-        // Attempting to add item to an existing stack.
-        if (inventory.Count > 0) {
+        if (combineStack && inventory.Count > 0) {
+            Debug.Log("Checking for existing item in inventory.");
             for (int inventoryIndex = 0; inventoryIndex < GameManager.instance.GetPlayerInventorySize(); inventoryIndex++) {
                 Item[] itemInSlot = GetItemFromInventoryByIndex(inventoryIndex);
                 if (itemInSlot.Length > 0 && itemInSlot[0].GetItemId() == item.GetItemId()) {
@@ -133,9 +132,9 @@ public class PlayerEquipmentManager : MonoBehaviour
         }
         
         // Add item to hotbar if a slot is available.
-        Debug.Log("Checking for empty slot in hot bar.");
         int emptySlot = -1;
         if (inventoryHotBar.Count < 10) {
+            Debug.Log("Checking for empty slot in hot bar.");
             for (int slotIndex = 0; slotIndex <= 10; slotIndex++) {
                 if (emptySlot >= 0) {
                     continue;
@@ -158,9 +157,9 @@ public class PlayerEquipmentManager : MonoBehaviour
         }
 
         // Attempting to add item to a new slot.
-        Debug.Log("Checking for empty slot in inventory.");
         emptySlot = -1;
         for (int inventoryIndex = 0; inventoryIndex < GameManager.instance.GetPlayerInventorySize(); inventoryIndex++) {
+            Debug.Log("Checking for empty slot in inventory.");
             if (emptySlot >= 0) {
                 return;
             }
@@ -191,7 +190,7 @@ public class PlayerEquipmentManager : MonoBehaviour
         }
 
         UnequipItem();
-        DropItemAtIndex(Item.ItemInventoryLocation.Hotbar, InterfaceManager.instance.GetHotBarIndex());
+        DropItemAtIndex(Item.ItemInventoryLocation.HotBar, InterfaceManager.instance.GetHotBarIndex());
         playerInteractionManager.DestroyDisplayObjects();
         playerStateManager.TriggerHeldState();
     }
@@ -223,6 +222,31 @@ public class PlayerEquipmentManager : MonoBehaviour
         UnequipItem();
         playerInteractionManager.DestroyDisplayObjects();
         playerStateManager.TriggerHeldState();
+    }
+
+    public void SplitStack(int index, Item.ItemInventoryLocation inventoryLocation) {
+        Item[] item = new Item[0];
+        if (inventoryLocation == Item.ItemInventoryLocation.HotBar) {
+            item = GetItemFromInventoryHotBarByIndex(index);
+        }
+        if (inventoryLocation == Item.ItemInventoryLocation.Inventory) {
+            item = GetItemFromInventoryByIndex(index);
+        }
+        if (item.Length == 0) {
+            Debug.LogError("Selected tile for split is empty.");
+            return;
+        }
+        if (item[0].GetItemQuantity() < 2) {
+            Debug.LogError("Selected item for split has too few items to split.");
+            return;
+        }
+
+        Item newItem = new Item();
+        newItem.CloneItemValues(item[0]);
+        int quantityForNewStack = newItem.GetItemQuantity() / 2;
+        newItem.SetItemQuantity(quantityForNewStack);
+        item[0].SetItemQuantity(item[0].GetItemQuantity() - quantityForNewStack);
+        PickUpItem(newItem, false);
     }
 
     public void UpdateEquippedObject() {

@@ -27,11 +27,18 @@ public class ItemManager : MonoBehaviour
             Debug.LogError("Item icon not set for \"" + itemId + "\".");
             return;
         }
+
+        bool[] itemStackable = ConstantsManager.instance.GetItemStackableById(itemId);
+        if (itemStackable.Length == 0) {
+            Debug.LogError("Stackable not set for \"" + itemId + "\".");
+            return;
+        }
         
         Item newItem = new Item(
             itemIcon,
             itemId,
             Item.ItemInventoryLocation.None,
+            itemStackable[0],
             itemDisplayName,
             0
         );

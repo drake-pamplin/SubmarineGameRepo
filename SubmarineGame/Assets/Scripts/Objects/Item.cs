@@ -6,7 +6,7 @@ public class Item : MonoBehaviour
 {
     public enum ItemInventoryLocation {
         None,
-        Hotbar,
+        HotBar,
         Inventory
     }
     
@@ -18,10 +18,12 @@ public class Item : MonoBehaviour
     public string GetItemId() { return itemId; }
     public ItemInventoryLocation itemInventoryLocation;
     public ItemInventoryLocation GetItemInventoryLocation() { return itemInventoryLocation; }
-    public void SetItemInventoryLocationToHotbar() { itemInventoryLocation = ItemInventoryLocation.Hotbar; }
+    public void SetItemInventoryLocationToHotbar() { itemInventoryLocation = ItemInventoryLocation.HotBar; }
     public void SetItemInventoryLocationToInventory() { itemInventoryLocation = ItemInventoryLocation.Inventory; }
-    public bool IsItemInventoryLocationHotbar() { return itemInventoryLocation == ItemInventoryLocation.Hotbar; }
+    public bool IsItemInventoryLocationHotbar() { return itemInventoryLocation == ItemInventoryLocation.HotBar; }
     public bool IsItemInventoryLocationInventory() { return itemInventoryLocation == ItemInventoryLocation.Inventory; }
+    public bool itemIsStackable;
+    public bool IsItemStackable() { return itemIsStackable; }
     public int itemQuantity;
     public int GetItemQuantity() { return itemQuantity; }
     public void SetItemQuantity(int itemQuantity) { this.itemQuantity = itemQuantity; }
@@ -30,6 +32,7 @@ public class Item : MonoBehaviour
         itemIcon = null;
         itemId = null;
         itemInventoryLocation = ItemInventoryLocation.None;
+        itemIsStackable = false;
         itemDisplayName = null;
         itemQuantity = 0;
     }
@@ -38,12 +41,14 @@ public class Item : MonoBehaviour
         Sprite itemIcon,
         string itemId,
         ItemInventoryLocation itemInventoryLocation,
+        bool itemIsStackable,
         string itemDisplayName,
         int itemQuantity
     ) {
         this.itemIcon = itemIcon;
         this.itemId = itemId;
         this.itemInventoryLocation = itemInventoryLocation;
+        this.itemIsStackable = itemIsStackable;
         this.itemDisplayName = itemDisplayName;
         this.itemQuantity = itemQuantity;
     }
@@ -57,6 +62,7 @@ public class Item : MonoBehaviour
         itemIcon = item.GetItemIcon();
         itemId = item.GetItemId();
         itemInventoryLocation = item.GetItemInventoryLocation();
+        itemIsStackable = item.IsItemStackable();
         itemQuantity = item.GetItemQuantity();
     }
 }

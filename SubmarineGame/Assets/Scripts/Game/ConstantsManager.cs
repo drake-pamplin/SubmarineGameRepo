@@ -80,6 +80,17 @@ public class ConstantsManager : MonoBehaviour
     public static readonly List<string> itemIdThrowable = new List<string> {
         itemIdNet
     };
+    private Dictionary<string, bool> itemStackableLibrary = new Dictionary<string, bool>() {
+        { itemIdNet, false },
+        { itemIdWood, true }
+    };
+    public bool[] GetItemStackableById(string itemId) {
+        bool[] stackable = new bool[0];
+        if (itemStackableLibrary.TryGetValue(itemId, out bool stackableFound)) {
+            stackable = new bool[] { stackableFound };
+        }
+        return stackable;
+    }
 
     public static readonly char splitCharUnderscore = '_';
 

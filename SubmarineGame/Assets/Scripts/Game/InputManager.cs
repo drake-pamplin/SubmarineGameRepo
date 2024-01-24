@@ -94,6 +94,8 @@ public class InputManager : MonoBehaviour
         return inputValue;
     }
 
+    public bool GetInventorySplitInput() { return Keyboard.current.ctrlKey.isPressed; }
+
     public bool GetJumpInput() {
         bool inputValue = false;
 
