@@ -18,3 +18,5 @@ v0.2.0-skimming ================================================================
 v0.3.0-inventory-management =======================================================================
 - Added inventory logic for the main character inventory.
 - Added split, merge, and move logic to the inventory.
+
+v0.4.0-basic-crafting =============================================================================
