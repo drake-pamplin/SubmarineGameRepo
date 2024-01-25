@@ -16,3 +16,5 @@ v0.2.0-skimming ================================================================
 - Refined item logic and modeling.
 
 v0.3.0-inventory-management =======================================================================
+- Added inventory logic for the main character inventory.
+- Added split, merge, and move logic to the inventory.
